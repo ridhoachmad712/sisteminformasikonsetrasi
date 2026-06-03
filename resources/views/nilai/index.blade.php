@@ -31,19 +31,13 @@
     <form action="{{ route('nilai.store') }}" method="POST" class="space-y-4">
         @csrf
 
-        @foreach($grup as $konsentrasi => $data)
         <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden">
-            {{-- Header grup --}}
-            <div class="flex items-center gap-2 px-5 py-3 border-b border-gray-100 dark:border-gray-800"
-                style="background:{{ $data['warna'] }}0d">
-                <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background:{{ $data['warna'] }}"></span>
-                <h2 class="text-sm font-semibold" style="color:{{ $data['warna'] }}">Konsentrasi {{ $data['label'] }}</h2>
-            </div>
-            {{-- Mata kuliah --}}
             <div class="divide-y divide-gray-50 dark:divide-gray-800/50">
-                @foreach($data['items'] as $key => $namaMk)
+                @foreach($mataKuliah as $key => $namaMk)
                 <div class="flex items-center justify-between gap-4 px-5 py-3.5">
-                    <label for="nilai_{{ $key }}" class="text-sm text-gray-700 dark:text-gray-300 flex-1">{{ $namaMk }}</label>
+                    <label for="nilai_{{ $key }}" class="text-sm text-gray-700 dark:text-gray-300 flex-1">
+                        <span class="text-gray-400 mr-1.5">{{ $loop->iteration }}.</span>{{ $namaMk }}
+                    </label>
                     <select name="nilai[{{ $key }}]" id="nilai_{{ $key }}" required
                         class="shrink-0 w-24 h-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-3 text-sm font-semibold text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-none dark:bg-gray-900">
                         <option value="">—</option>
@@ -55,7 +49,6 @@
                 @endforeach
             </div>
         </div>
-        @endforeach
 
         {{-- Skala nilai --}}
         <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/40 px-4 py-3">

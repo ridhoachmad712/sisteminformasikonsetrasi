@@ -10,11 +10,22 @@ class NilaiController extends Controller
     public function index()
     {
         $mahasiswa = Mahasiswa::findOrFail(session('mahasiswa_id'));
-        $grup      = config('matakuliah.mata_kuliah');
         $pilihan   = config('matakuliah.pilihan');
         $nilai     = $mahasiswa->nilai_matkul ?? [];
 
-        return view('nilai.index', compact('mahasiswa', 'grup', 'pilihan', 'nilai'));
+        // Daftar 9 mata kuliah dalam satu list, urutan diselang-seling
+        // agar pengelompokan konsentrasi tidak terlihat oleh mahasiswa.
+        $grup    = config('matakuliah.mata_kuliah');
+        $kolom   = array_values(array_map(fn($g) => $g['items'], $grup)); // 3 grup × 3 MK
+        $mataKuliah = [];
+        for ($i = 0; $i < 3; $i++) {
+            foreach ($kolom as $items) {
+                $key  = array_keys($items)[$i];
+                $mataKuliah[$key] = $items[$key];
+            }
+        }
+
+        return view('nilai.index', compact('mahasiswa', 'mataKuliah', 'pilihan', 'nilai'));
     }
 
     public function store(Request $request)
