@@ -81,6 +81,37 @@ $rc = ['pemasaran'=>'#465fff','keuangan'=>'#12b76a','sdm'=>'#f79009'][$hasil->re
                 </table>
             </div>
         </div>
+
+        {{-- Nilai Mata Kuliah (data pendukung) --}}
+        @php $nilaiMk = $hasil->mahasiswa->nilai_matkul ?? []; @endphp
+        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+            <h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm">Nilai Mata Kuliah</h4>
+            <p class="text-xs text-gray-400 mb-4">Data pendukung pilihan konsentrasi</p>
+
+            @if($hasil->mahasiswa->sudah_input_nilai && count($nilaiMk))
+                @foreach(config('matakuliah.mata_kuliah') as $data)
+                <div class="mb-3 last:mb-0">
+                    <div class="flex items-center gap-1.5 mb-2">
+                        <span class="w-2 h-2 rounded-full" style="background:{{ $data['warna'] }}"></span>
+                        <span class="text-xs font-semibold uppercase tracking-wide" style="color:{{ $data['warna'] }}">{{ $data['label'] }}</span>
+                    </div>
+                    <div class="space-y-1.5">
+                        @foreach($data['items'] as $key => $namaMk)
+                        @php $n = $nilaiMk[$key] ?? '-'; $bobot = config('matakuliah.bobot.'.$n); @endphp
+                        <div class="flex items-center justify-between text-xs">
+                            <span class="text-gray-600 dark:text-gray-400">{{ $namaMk }}</span>
+                            <span class="font-bold px-2 py-0.5 rounded-md" style="background:{{ $data['warna'] }}15; color:{{ $data['warna'] }}">
+                                {{ $n }}@if($bobot !== null)<span class="font-normal opacity-60"> ({{ number_format($bobot,1) }})</span>@endif
+                            </span>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                @endforeach
+            @else
+                <p class="text-xs text-gray-400 italic py-2">Mahasiswa belum menginput nilai mata kuliah.</p>
+            @endif
+        </div>
     </div>
 
     {{-- Right Panel: Jawaban --}}

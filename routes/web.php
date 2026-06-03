@@ -51,6 +51,10 @@ Route::middleware('auth.mahasiswa')->group(function () {
     // Hasil akhir (tampil setelah kedua tes selesai)
     Route::get('/tes/hasil', [TesController::class, 'hasil'])->name('tes.hasil');
 
+    // Nilai Mata Kuliah
+    Route::get('/nilai', [App\Http\Controllers\NilaiController::class, 'index'])->name('nilai.index');
+    Route::post('/nilai', [App\Http\Controllers\NilaiController::class, 'store'])->name('nilai.store');
+
     // Profil
     Route::get('/profil', [App\Http\Controllers\ProfilController::class, 'index'])->name('profil.index');
 });

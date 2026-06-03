@@ -114,6 +114,30 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
             </div>
         </a>
 
+        {{-- Kartu Nilai Mata Kuliah --}}
+        <a href="{{ route('nilai.index') }}"
+            class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-500/10">
+                    <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-7 .91 12 12 0 01-7-.91 12 12 0 01.84-4.42L12 14z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <svg class="w-4 h-4 text-gray-300 dark:text-gray-700 group-hover:text-brand-400 transition-colors" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Nilai Mata Kuliah</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">Input 9 nilai mata kuliah pendukung konsentrasi.</p>
+            <div class="mt-3">
+                @if($mahasiswa->sudah_input_nilai)
+                <span class="inline-flex items-center gap-1 rounded-full bg-success-100 dark:bg-success-500/20 px-2 py-0.5 text-xs font-medium text-success-600 dark:text-success-400">
+                    Sudah diisi ✓
+                </span>
+                @else
+                <span class="inline-flex items-center gap-1 rounded-full bg-warning-100 dark:bg-warning-500/20 px-2 py-0.5 text-xs font-medium text-warning-700 dark:text-warning-400">
+                    Belum diisi
+                </span>
+                @endif
+            </div>
+        </a>
+
         {{-- Kartu Profil --}}
         <a href="{{ route('profil.index') }}"
             class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-theme-sm transition-all">
@@ -126,7 +150,7 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
                 <svg class="w-4 h-4 text-gray-300 dark:text-gray-700 group-hover:text-gray-500 transition-colors" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
             <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Profil Saya</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">Lihat data diri dan ubah password akun Anda.</p>
+            <p class="text-xs text-gray-400 leading-relaxed">Lihat data diri dan ringkasan hasil tes Anda.</p>
         </a>
 
     </div>
