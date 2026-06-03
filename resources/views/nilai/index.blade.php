@@ -60,8 +60,8 @@
         {{-- Skala nilai --}}
         <div class="rounded-xl border border-gray-100 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/40 px-4 py-3">
             <p class="text-xs text-gray-400 leading-relaxed">
-                <span class="font-medium text-gray-500 dark:text-gray-300">Skala nilai:</span>
-                A (4.0) · A- (3.7) · B+ (3.3) · B (3.0) · B- (2.7) · C+ (2.3) · C (2.0) · C- (1.7) · D (1.0) · E (0)
+                <span class="font-medium text-gray-500 dark:text-gray-300">Bobot nilai:</span>
+                A (96) · A- (88) · B+ (83) · B (78) · B- (73) · C+ (68) · C (63) · C- (58) · D (48) · E (21)
             </p>
         </div>
 
