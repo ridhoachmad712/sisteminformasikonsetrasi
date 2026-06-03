@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin') — SIK Konsentrasi</title>
+    <title>@yield('title', 'Admin') — SINIKO</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>[x-cloak]{display:none !important}</style>
@@ -91,7 +91,7 @@
                     </div>
                     <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                         class="text-gray-900 dark:text-white font-bold text-base leading-tight">
-                        SIK<br><span class="font-normal text-gray-500 text-xs">Konsentrasi</span>
+                        SINIKO<br><span class="font-normal text-gray-500 text-xs">Konsentrasi</span>
                     </span>
                 </a>
             </div>
@@ -165,7 +165,7 @@
                         </button>
                         <div>
                             <h1 class="text-sm font-semibold text-gray-800 dark:text-white">@yield('page-title', 'Dashboard')</h1>
-                            <p class="text-xs text-gray-400">Sistem Informasi Tes Konsentrasi</p>
+                            <p class="text-xs text-gray-400">SINIKO — Sistem Informasi Konsentrasi</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">

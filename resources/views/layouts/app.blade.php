@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Tes Konsentrasi') — Prodi Manajemen</title>
+    <title>@yield('title', 'Tes Konsentrasi') — SINIKO</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         document.addEventListener('alpine:init', () => {
@@ -37,7 +37,7 @@
                 <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 shrink-0">
                     <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                 </div>
-                <span class="font-bold text-gray-900 dark:text-white text-sm leading-none">SIK<br><span class="font-normal text-gray-400 text-xs">Konsentrasi</span></span>
+                <span class="font-bold text-gray-900 dark:text-white text-sm leading-none">SINIKO<br><span class="font-normal text-gray-400 text-xs">Konsentrasi</span></span>
             </a>
 
             {{-- Right actions --}}

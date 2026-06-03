@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login — SIK Konsentrasi</title>
+    <title>Login — SINIKO</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         document.addEventListener('alpine:init', () => {
@@ -52,8 +52,8 @@
         <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-brand-500 mb-4 shadow-lg shadow-brand-500/25">
             <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
         </div>
-        <h1 class="text-xl font-bold text-gray-900 dark:text-white">Tes Konsentrasi</h1>
-        <p class="text-sm text-gray-400 mt-1">Prodi Manajemen</p>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">SINIKO</h1>
+        <p class="text-sm text-gray-400 mt-1">Sistem Informasi Konsentrasi — Prodi Manajemen</p>
     </div>
 
     {{-- Card --}}
