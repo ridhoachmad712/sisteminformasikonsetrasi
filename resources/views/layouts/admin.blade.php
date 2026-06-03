@@ -7,6 +7,7 @@
     <title>@yield('title', 'Admin') — SIK Konsentrasi</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <style>[x-cloak]{display:none !important}</style>
 
     <script>
         document.addEventListener('alpine:init', () => {
@@ -173,13 +174,35 @@
                             <svg class="dark:hidden" width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M17.45 11.97l.73.19c.085-.323-.054-.663-.34-.834-.287-.172-.652-.133-.896.095l.506.549zm-9.42-9.42l.55.51c.227-.245.266-.611.094-.897-.172-.287-.512-.425-.834-.34l.19.727zM12.92 13C9.648 13 7 10.353 7 7.085H5.5c0 4.097 3.32 7.415 7.415 7.415V13zm3.956-2.579C15.83 12.397 14.47 13 12.92 13v1.5c1.95 0 3.727-.754 5.051-1.981L16.876 10.42zm-.146.359c-.786 2.982-3.501 5.18-6.73 5.18v1.5c3.925 0 7.224-2.673 8.18-6.3l-1.45-.38zM10 18C6.157 18 3.042 14.843 3.042 11H1.542C1.542 15.671 5.33 19.5 10 19.5V18zm-6.958-7C3.042 7.772 5.24 5.056 8.222 4.271L7.84 2.82C4.215 3.776 1.542 7.075 1.542 11H3.042zm4-3.915C7 5.529 7.597 4.113 8.58 3.056L7.481 2.035C6.25 3.359 5.5 5.135 5.5 7.085H7z" fill="currentColor"/></svg>
                             <svg class="hidden dark:block" width="18" height="18" viewBox="0 0 20 20" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M10 1.542a.75.75 0 01.75.75v1.25a.75.75 0 01-1.5 0V2.292a.75.75 0 01.75-.75zm0 5.25a3.208 3.208 0 100 6.416A3.208 3.208 0 0010 6.793zm5.98-1.018a.75.75 0 00-1.06-1.06l-.884.884a.75.75 0 001.06 1.06l.884-.884zM17.708 10a.75.75 0 01-.75.75h-1.25a.75.75 0 010-1.5h1.25a.75.75 0 01.75.75zm-2.69 4.22a.75.75 0 001.06-1.06l-.883-.884a.75.75 0 00-1.06 1.06l.883.884zM10 15.458a.75.75 0 01.75.75v1.25a.75.75 0 01-1.5 0v-1.25a.75.75 0 01.75-.75zm-4.22-1.238a.75.75 0 001.06-1.06l-.883-.884a.75.75 0 10-1.06 1.06l.883.884zM4.292 10a.75.75 0 01-.75.75H2.292a.75.75 0 010-1.5h1.25a.75.75 0 01.75.75zm.547-5.238a.75.75 0 10-1.06 1.06l.883.884a.75.75 0 001.06-1.06l-.883-.884z" fill="currentColor"/></svg>
                         </button>
-                        <div class="flex items-center gap-2 pl-3 border-l border-gray-200 dark:border-gray-800">
-                            <div class="flex items-center justify-center w-9 h-9 rounded-full bg-brand-500 text-white text-sm font-bold">
-                                {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
-                            </div>
-                            <div class="hidden sm:block">
-                                <p class="text-sm font-medium text-gray-800 dark:text-white">{{ Auth::user()->name ?? 'Admin' }}</p>
-                                <p class="text-xs text-gray-400">Administrator</p>
+                        <div class="relative pl-3 border-l border-gray-200 dark:border-gray-800" x-data="{open:false}">
+                            <button @click="open = !open" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                                <div class="flex items-center justify-center w-9 h-9 rounded-full bg-brand-500 text-white text-sm font-bold">
+                                    {{ strtoupper(substr(Auth::user()->name ?? 'A', 0, 1)) }}
+                                </div>
+                                <div class="hidden sm:block text-left">
+                                    <p class="text-sm font-medium text-gray-800 dark:text-white">{{ Auth::user()->name ?? 'Admin' }}</p>
+                                    <p class="text-xs text-gray-400">Administrator</p>
+                                </div>
+                                <svg class="hidden sm:block w-4 h-4 text-gray-400 transition-transform" :class="open && 'rotate-180'" viewBox="0 0 24 24" fill="none"><path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                            </button>
+
+                            {{-- Dropdown --}}
+                            <div x-show="open" x-cloak @click.outside="open = false" x-transition
+                                class="absolute right-0 mt-2 w-48 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 shadow-theme-lg py-1.5 z-[99999]">
+                                <a href="{{ route('admin.akun') }}"
+                                    class="flex items-center gap-2.5 px-4 py-2.5 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5">
+                                    <svg class="w-4 h-4 text-gray-400" viewBox="0 0 24 24" fill="none"><path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                    Akun &amp; Password
+                                </a>
+                                <div class="my-1 border-t border-gray-100 dark:border-gray-700"></div>
+                                <form action="{{ route('logout.admin') }}" method="POST">
+                                    @csrf
+                                    <button type="submit"
+                                        class="w-full flex items-center gap-2.5 px-4 py-2.5 text-sm text-error-600 dark:text-error-400 hover:bg-error-50 dark:hover:bg-error-500/10">
+                                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M15 3H7C5.895 3 5 3.895 5 5v14c0 1.105.895 2 2 2h8M19 12H9M16 9l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                                        Logout
+                                    </button>
+                                </form>
                             </div>
                         </div>
                     </div>

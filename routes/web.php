@@ -79,4 +79,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Jadwal Tes
     Route::resource('jadwal', JadwalController::class);
     Route::post('jadwal/{jadwal}/toggle', [JadwalController::class, 'toggleAktif'])->name('jadwal.toggle');
+
+    // Akun Admin
+    Route::get('akun', [\App\Http\Controllers\Admin\AkunController::class, 'index'])->name('akun');
+    Route::put('akun/profil', [\App\Http\Controllers\Admin\AkunController::class, 'updateProfil'])->name('akun.profil');
+    Route::put('akun/password', [\App\Http\Controllers\Admin\AkunController::class, 'updatePassword'])->name('akun.password');
 });
