@@ -145,6 +145,24 @@ arsort($allScores);
         <p class="mt-3 text-xs text-gray-400 text-center">Formula: (Skor Minat / 75 × 100 × 60%) + (Skor Bakat / 50 × 100 × 40%)</p>
     </div>
 
+    {{-- Disclaimer --}}
+    <div class="rounded-2xl border border-warning-200 dark:border-warning-900 bg-warning-50 dark:bg-warning-900/20 p-4 sm:p-5">
+        <div class="flex items-start gap-3">
+            <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-warning-100 dark:bg-warning-500/20 shrink-0">
+                <svg class="w-5 h-5 text-warning-600 dark:text-warning-400" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+                <h4 class="font-semibold text-warning-800 dark:text-warning-300 text-sm mb-1">Rekomendasi Belum Bersifat Final</h4>
+                <p class="text-xs text-warning-700 dark:text-warning-400/90 leading-relaxed">
+                    Hasil ini disusun <strong>hanya berdasarkan tes minat dan bakat</strong>. Penentuan konsentrasi akhir
+                    masih perlu meninjau aspek lain seperti <strong>nilai akademik, kapasitas kelas, serta kebijakan
+                    Program Studi</strong>. Gunakan rekomendasi ini sebagai bahan pertimbangan, dan konsultasikan dengan
+                    dosen Penasihat Akademik atau pihak Prodi sebelum mengambil keputusan.
+                </p>
+            </div>
+        </div>
+    </div>
+
     {{-- Logout --}}
     <div class="text-center pb-6">
         <form action="{{ route('logout.mahasiswa') }}" method="POST" class="inline">
