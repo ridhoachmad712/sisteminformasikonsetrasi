@@ -122,6 +122,28 @@ $rc = ['pemasaran'=>'#465fff','keuangan'=>'#12b76a','sdm'=>'#f79009'][$hasil->re
                 <p class="text-xs text-gray-400 italic py-2">Mahasiswa belum menginput nilai mata kuliah.</p>
             @endif
         </div>
+
+        {{-- Pilihan Konsentrasi Mahasiswa --}}
+        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+            <h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm">Preferensi Konsentrasi</h4>
+            <p class="text-xs text-gray-400 mb-4">Pilihan mahasiswa di awal</p>
+            @if($hasil->mahasiswa->sudah_pilih_konsentrasi && $hasil->mahasiswa->pilihan_konsentrasi)
+                <div class="space-y-2">
+                    @foreach($hasil->mahasiswa->pilihan_konsentrasi as $i => $k)
+                    @php $cocok = $k === $hasil->rekomendasi; @endphp
+                    <div class="flex items-center gap-2.5 text-xs">
+                        <span class="flex items-center justify-center w-5 h-5 rounded-md bg-gray-100 dark:bg-gray-800 font-bold text-gray-600 dark:text-gray-300 shrink-0">{{ $i + 1 }}</span>
+                        <span class="text-gray-700 dark:text-gray-300 flex-1">{{ \App\Models\Mahasiswa::labelKonsentrasi($k) }}</span>
+                        @if($cocok)
+                        <span class="inline-flex items-center gap-1 rounded-full bg-success-50 dark:bg-success-500/10 px-2 py-0.5 font-medium text-success-600 dark:text-success-400">= rekomendasi</span>
+                        @endif
+                    </div>
+                    @endforeach
+                </div>
+            @else
+                <p class="text-xs text-gray-400 italic py-2">Mahasiswa belum memilih konsentrasi.</p>
+            @endif
+        </div>
     </div>
 
     {{-- Right Panel: Jawaban --}}

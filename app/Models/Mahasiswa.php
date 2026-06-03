@@ -15,6 +15,7 @@ class Mahasiswa extends Model
         'jawaban_draft', 'urutan_soal',   // legacy, tetap untuk kompatibilitas
         'draft_minat', 'draft_bakat', 'urutan_minat', 'urutan_bakat',
         'nilai_matkul', 'sudah_input_nilai', 'ipk',
+        'pilihan_konsentrasi', 'sudah_pilih_konsentrasi',
     ];
 
     protected $casts = [
@@ -27,9 +28,21 @@ class Mahasiswa extends Model
         'draft_bakat'       => 'array',
         'urutan_minat'      => 'array',
         'urutan_bakat'      => 'array',
-        'nilai_matkul'      => 'array',
-        'sudah_input_nilai' => 'boolean',
+        'nilai_matkul'             => 'array',
+        'sudah_input_nilai'        => 'boolean',
+        'pilihan_konsentrasi'      => 'array',
+        'sudah_pilih_konsentrasi'  => 'boolean',
     ];
+
+    /** Label konsentrasi */
+    public static function labelKonsentrasi(string $key): string
+    {
+        return [
+            'pemasaran' => 'Manajemen Pemasaran',
+            'keuangan'  => 'Manajemen Keuangan',
+            'sdm'       => 'Manajemen SDM',
+        ][$key] ?? $key;
+    }
 
     /** Kedua tes sudah selesai */
     public function getBothTesCompleteAttribute(): bool

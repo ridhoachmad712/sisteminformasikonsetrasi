@@ -80,6 +80,36 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
     {{-- ── Menu utama ─────────────────────────────────────────── --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
+        {{-- Kartu Pilihan Konsentrasi --}}
+        <a href="{{ route('pilihan.index') }}"
+            class="group sm:col-span-2 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-500/10 shrink-0">
+                    <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M7 12h10M10 18h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Pilihan Konsentrasi</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed">Urutkan preferensi konsentrasi Anda (peringkat 1–2–3).</p>
+                    @if($mahasiswa->sudah_pilih_konsentrasi && $mahasiswa->pilihan_konsentrasi)
+                    <div class="flex flex-wrap items-center gap-1.5 mt-2">
+                        @foreach($mahasiswa->pilihan_konsentrasi as $i => $k)
+                        <span class="inline-flex items-center gap-1 rounded-full bg-gray-100 dark:bg-gray-800 px-2 py-0.5 text-xs font-medium text-gray-600 dark:text-gray-300">
+                            <span class="text-brand-500 font-bold">{{ $i + 1 }}.</span> {{ \App\Models\Mahasiswa::labelKonsentrasi($k) }}
+                        </span>
+                        @endforeach
+                    </div>
+                    @endif
+                </div>
+                <div class="shrink-0">
+                    @if($mahasiswa->sudah_pilih_konsentrasi)
+                    <span class="inline-flex items-center rounded-full bg-success-100 dark:bg-success-500/20 px-2 py-0.5 text-xs font-medium text-success-600 dark:text-success-400">Sudah ✓</span>
+                    @else
+                    <span class="inline-flex items-center rounded-full bg-warning-100 dark:bg-warning-500/20 px-2 py-0.5 text-xs font-medium text-warning-700 dark:text-warning-400">Belum diisi</span>
+                    @endif
+                </div>
+            </div>
+        </a>
+
         {{-- Kartu Tes --}}
         <a href="{{ route('tes.index') }}"
             class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
