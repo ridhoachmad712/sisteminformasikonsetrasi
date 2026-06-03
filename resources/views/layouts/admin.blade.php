@@ -86,9 +86,8 @@
             <div class="pt-8 pb-7 flex"
                 :class="(!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen) ? 'xl:justify-center' : 'justify-start'">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
-                    <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-brand-500 shrink-0">
-                        <svg class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                    </div>
+                    <img src="/images/logo/dark.png" alt="SINIKO" class="w-9 h-9 object-contain shrink-0 dark:hidden">
+                    <img src="/images/logo/white.png" alt="SINIKO" class="w-9 h-9 object-contain shrink-0 hidden dark:block">
                     <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                         class="text-gray-900 dark:text-white font-bold text-base leading-tight">
                         SINIKO<br><span class="font-normal text-gray-500 text-xs">Konsentrasi</span>

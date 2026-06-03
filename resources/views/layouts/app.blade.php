@@ -34,9 +34,8 @@
 
             {{-- Logo --}}
             <a href="{{ route('beranda') }}" class="flex items-center gap-2 shrink-0">
-                <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-brand-500 shrink-0">
-                    <svg class="w-4 h-4 text-white" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-                </div>
+                <img src="/images/logo/dark.png" alt="SINIKO" class="w-8 h-8 object-contain shrink-0 dark:hidden">
+                <img src="/images/logo/white.png" alt="SINIKO" class="w-8 h-8 object-contain shrink-0 hidden dark:block">
                 <span class="font-bold text-gray-900 dark:text-white text-sm leading-none">SINIKO<br><span class="font-normal text-gray-400 text-xs">Konsentrasi</span></span>
             </a>
 

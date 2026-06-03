@@ -23,10 +23,9 @@
 
     {{-- Logo --}}
     <div class="text-center mb-8">
-        <div class="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-gray-900 dark:bg-white/10 mb-4 shadow-lg">
-            <svg class="w-7 h-7 text-white" viewBox="0 0 24 24" fill="none">
-                <path d="M12 1l3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1 3-6z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
-            </svg>
+        <div class="inline-flex items-center justify-center mb-4">
+            <img src="/images/logo/dark.png" alt="SINIKO" class="w-20 h-20 object-contain dark:hidden">
+            <img src="/images/logo/white.png" alt="SINIKO" class="w-20 h-20 object-contain hidden dark:block">
         </div>
         <h1 class="text-xl font-bold text-gray-900 dark:text-white">Panel Admin</h1>
         <p class="text-sm text-gray-400 mt-1">SINIKO — Sistem Informasi Konsentrasi</p>
