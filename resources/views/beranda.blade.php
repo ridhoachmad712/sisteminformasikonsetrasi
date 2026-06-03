@@ -123,8 +123,8 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
                 </div>
                 <svg class="w-4 h-4 text-gray-300 dark:text-gray-700 group-hover:text-brand-400 transition-colors" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
-            <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Nilai Mata Kuliah</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">Input 9 nilai mata kuliah pendukung konsentrasi.</p>
+            <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Nilai Akademik</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">Input IPK & 9 nilai mata kuliah pendukung konsentrasi.</p>
             <div class="mt-3">
                 @if($mahasiswa->sudah_input_nilai)
                 <span class="inline-flex items-center gap-1 rounded-full bg-success-100 dark:bg-success-500/20 px-2 py-0.5 text-xs font-medium text-success-600 dark:text-success-400">

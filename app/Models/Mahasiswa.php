@@ -14,7 +14,7 @@ class Mahasiswa extends Model
         'session_token',
         'jawaban_draft', 'urutan_soal',   // legacy, tetap untuk kompatibilitas
         'draft_minat', 'draft_bakat', 'urutan_minat', 'urutan_bakat',
-        'nilai_matkul', 'sudah_input_nilai',
+        'nilai_matkul', 'sudah_input_nilai', 'ipk',
     ];
 
     protected $casts = [

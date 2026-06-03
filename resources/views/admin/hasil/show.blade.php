@@ -85,7 +85,15 @@ $rc = ['pemasaran'=>'#465fff','keuangan'=>'#12b76a','sdm'=>'#f79009'][$hasil->re
         {{-- Nilai Mata Kuliah (data pendukung) --}}
         @php $mkData = $hasil->mahasiswa->nilaiMkPerKonsentrasi(); @endphp
         <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-            <h4 class="font-bold text-gray-900 dark:text-white mb-1 text-sm">Nilai Mata Kuliah Pendukung</h4>
+            <div class="flex items-center justify-between mb-1">
+                <h4 class="font-bold text-gray-900 dark:text-white text-sm">Nilai Akademik Pendukung</h4>
+                @if($hasil->mahasiswa->ipk !== null)
+                <span class="inline-flex items-center gap-1 rounded-lg bg-brand-50 dark:bg-brand-500/10 px-2.5 py-1 text-xs">
+                    <span class="text-gray-400">IPK</span>
+                    <span class="font-bold text-brand-600 dark:text-brand-400">{{ number_format($hasil->mahasiswa->ipk, 2) }}</span>
+                </span>
+                @endif
+            </div>
             <p class="text-xs text-gray-400 mb-4">Data pendukung — tidak memengaruhi nilai tes</p>
 
             @if($mkData)

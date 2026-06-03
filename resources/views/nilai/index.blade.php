@@ -15,10 +15,10 @@
     <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
         <h1 class="font-bold text-gray-900 dark:text-white flex items-center gap-2">
             <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-7 .91 12 12 0 01-7-.91 12 12 0 01.84-4.42L12 14z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Input Nilai Mata Kuliah
+            Input Nilai Akademik
         </h1>
         <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-            Masukkan nilai akhir (huruf) untuk 9 mata kuliah berikut. Nilai ini menjadi data pendukung rekomendasi konsentrasi Anda.
+            Masukkan IPK dan nilai akhir (huruf) 9 mata kuliah berikut. Data ini menjadi pertimbangan pendukung rekomendasi konsentrasi Anda.
         </p>
         @if($mahasiswa->sudah_input_nilai)
         <div class="mt-3 inline-flex items-center gap-1.5 rounded-full bg-success-50 dark:bg-success-500/10 px-3 py-1 text-xs font-medium text-success-600 dark:text-success-400">
@@ -31,6 +31,23 @@
     <form action="{{ route('nilai.store') }}" method="POST" class="space-y-4">
         @csrf
 
+        {{-- IPK --}}
+        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+            <label for="ipk" class="block text-sm font-semibold text-gray-800 dark:text-white mb-1">
+                Indeks Prestasi Kumulatif (IPK)
+            </label>
+            <p class="text-xs text-gray-400 mb-3">Masukkan IPK terakhir Anda (skala 0,00 – 4,00).</p>
+            <input type="number" name="ipk" id="ipk" step="0.01" min="0" max="4"
+                value="{{ old('ipk', $mahasiswa->ipk) }}" required placeholder="Contoh: 3.45"
+                class="w-40 h-11 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 text-sm font-semibold text-gray-800 dark:text-white placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-none dark:bg-gray-900">
+            @error('ipk')<p class="mt-1.5 text-xs text-error-500">{{ $message }}</p>@enderror
+        </div>
+
+        {{-- Daftar Mata Kuliah --}}
+        <div class="px-1">
+            <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">Nilai Mata Kuliah</h2>
+            <p class="text-xs text-gray-400">Pilih nilai huruf untuk tiap mata kuliah.</p>
+        </div>
         <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden">
             <div class="divide-y divide-gray-50 dark:divide-gray-800/50">
                 @foreach($mataKuliah as $key => $namaMk)

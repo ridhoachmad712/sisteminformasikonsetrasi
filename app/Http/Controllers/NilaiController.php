@@ -40,12 +40,15 @@ class NilaiController extends Controller
             $semuaKey = array_merge($semuaKey, array_keys($g['items']));
         }
 
-        // Aturan validasi: setiap mata kuliah wajib & harus salah satu nilai valid
-        $rules = [];
+        // Aturan validasi: IPK + setiap mata kuliah wajib & harus salah satu nilai valid
+        $rules = ['ipk' => ['required', 'numeric', 'between:0,4']];
         foreach ($semuaKey as $key) {
             $rules["nilai.$key"] = ['required', 'in:' . implode(',', $pilihan)];
         }
         $request->validate($rules, [
+            'ipk.required'     => 'IPK wajib diisi.',
+            'ipk.numeric'      => 'IPK harus berupa angka.',
+            'ipk.between'      => 'IPK harus antara 0,00 sampai 4,00.',
             'nilai.*.required' => 'Semua nilai mata kuliah wajib diisi.',
             'nilai.*.in'       => 'Nilai tidak valid.',
         ]);
@@ -58,9 +61,10 @@ class NilaiController extends Controller
 
         $mahasiswa->update([
             'nilai_matkul'      => $bersih,
+            'ipk'               => $request->input('ipk'),
             'sudah_input_nilai' => true,
         ]);
 
-        return redirect()->route('beranda')->with('success', 'Nilai mata kuliah berhasil disimpan.');
+        return redirect()->route('beranda')->with('success', 'Data nilai akademik berhasil disimpan.');
     }
 }
