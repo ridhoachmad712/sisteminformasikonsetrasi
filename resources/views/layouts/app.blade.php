@@ -87,7 +87,7 @@
     </header>
 
     {{-- CONTENT --}}
-    <main class="max-w-2xl mx-auto px-4 py-5 pb-16" style="margin-top: calc(3.5rem + env(safe-area-inset-top))">
+    <main class="max-w-2xl mx-auto px-4 py-5" style="margin-top: calc(3.5rem + env(safe-area-inset-top)); padding-bottom: calc(4rem + env(safe-area-inset-bottom))">
 
         @if(session('success'))
         <div x-data="{show:true}" x-show="show"
