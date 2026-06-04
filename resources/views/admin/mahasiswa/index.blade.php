@@ -91,8 +91,8 @@
                                 class="flex items-center justify-center w-8 h-8 rounded-lg border border-gray-200 dark:border-gray-800 text-gray-500 hover:bg-gray-100 dark:hover:bg-white/5 transition-colors" title="Edit">
                                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
                             </a>
-                            @if($m->sudah_tes)
-                            <form action="{{ route('admin.mahasiswa.reset-tes', $m) }}" method="POST" class="inline" onsubmit="return confirm('Reset status tes?')">
+                            @if($m->sudah_tes || $m->sudah_tes_minat || $m->sudah_tes_bakat)
+                            <form action="{{ route('admin.mahasiswa.reset-tes', $m) }}" method="POST" class="inline" onsubmit="return confirm('Reset semua status tes {{ $m->nama }}? Semua data jawaban akan dihapus.')">
                                 @csrf
                                 <button type="submit" class="flex items-center justify-center w-8 h-8 rounded-lg border border-warning-200 dark:border-warning-900 text-warning-500 hover:bg-warning-50 dark:hover:bg-warning-500/10 transition-colors" title="Reset Tes">
                                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M1 4v6h6M23 20v-6h-6M20.49 9A9 9 0 005.64 5.64L1 10M23 14l-4.64 4.36A9 9 0 013.51 15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>

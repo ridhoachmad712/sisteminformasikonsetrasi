@@ -81,8 +81,23 @@ class MahasiswaController extends Controller
 
     public function resetTes(\App\Models\Mahasiswa $mahasiswum)
     {
-        $mahasiswum->update(['sudah_tes' => false]);
+        // Hapus semua hasil tes & detail jawaban (cascade)
+        $mahasiswum->hasilTes()->each(fn($h) => $h->detailJawaban()->delete());
         $mahasiswum->hasilTes()->delete();
-        return redirect()->back()->with('success', 'Status tes mahasiswa berhasil direset.');
+
+        // Reset semua kolom terkait tes
+        $mahasiswum->update([
+            'sudah_tes'        => false,
+            'sudah_tes_minat'  => false,
+            'sudah_tes_bakat'  => false,
+            'draft_minat'      => null,
+            'draft_bakat'      => null,
+            'urutan_minat'     => null,
+            'urutan_bakat'     => null,
+            'tes_aktif'        => null,
+            'last_activity_at' => null,
+        ]);
+
+        return redirect()->back()->with('success', 'Status tes ' . $mahasiswum->nama . ' berhasil direset.');
     }
 }
