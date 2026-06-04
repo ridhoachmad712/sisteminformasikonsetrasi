@@ -260,6 +260,7 @@ function tesData() {
         total: TOTAL_SOAL,
         soalList: SOAL_LIST,
         answered: 0,
+        answeredIds: new Set(),
         showReview: false,
         submitting: false,
         timeText: '--:--',
@@ -270,12 +271,19 @@ function tesData() {
         saveTimer: null,
 
         updateProgress() {
-            this.answered = document.querySelectorAll('input[type=radio]:checked').length;
+            const checked = document.querySelectorAll('input[type=radio]:checked');
+            this.answered = checked.length;
+            this.answeredIds = new Set(
+                Array.from(checked).map(r => {
+                    const m = r.name.match(/jawaban\[(\d+)\]/);
+                    return m ? parseInt(m[1]) : null;
+                }).filter(Boolean)
+            );
         },
 
         // ── Review ─────────────────────────────────
         isAnswered(soalId) {
-            return !!document.querySelector(`input[name="jawaban[${soalId}]"]:checked`);
+            return this.answeredIds.has(soalId);
         },
         openReview() {
             this.updateProgress();
