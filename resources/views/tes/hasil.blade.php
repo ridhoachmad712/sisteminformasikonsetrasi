@@ -123,6 +123,11 @@ arsort($allScores);
             <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.25 5.5C3.25 4.26 4.26 3.25 5.5 3.25h13c1.24 0 2.25 1.01 2.25 2.25v13c0 1.24-1.01 2.25-2.25 2.25h-13C4.26 20.75 3.25 19.74 3.25 18.5v-13zm2.25-1.25a.75.75 0 00-.75.75v3.08h13.5V5c0-.41-.34-.75-.75-.75H5.5zm-1.25 5.33v3.84h3.83v-3.84H4.25zm5.33 0v3.84h3.84v-3.84h-3.84zm5.34 0v3.84h3.83v-3.84h-3.83zM4.75 18.5v-3.08H8.58v4h-3.08a.75.75 0 01-.75-.92zm5.33.92v-4H13.9v4h-3.84zm5.34 0v-4h3.83v3.08a.75.75 0 01-.75.92h-3.08z" fill="currentColor"/></svg>
             Rincian Skor
         </h3>
+        {{-- Hint geser untuk mobile --}}
+        <p class="text-xs text-gray-400 flex items-center gap-1 mb-2 sm:hidden">
+            <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="none"><path d="M14 5l7 7-7 7M3 12h18" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Geser ke kanan untuk melihat selengkapnya
+        </p>
         <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800">
             <table class="w-full text-sm min-w-[400px]">
                 <thead>

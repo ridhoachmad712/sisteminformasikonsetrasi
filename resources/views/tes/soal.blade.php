@@ -13,15 +13,19 @@ $draftJson   = json_encode($draft ?? []);
 
 @push('styles')
 <style>
-/* Tombol Likert — touch-friendly di mobile */
+/* Tombol Likert — touch-friendly di mobile, lebih besar di desktop */
 .likert-wrap { display: flex; gap: 8px; }
 .likert-label {
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     flex: 1; min-width: 0; aspect-ratio: 1;
-    max-width: 56px; border-radius: 12px;
+    max-width: 64px; border-radius: 12px;
     border: 1.5px solid #d0d5dd; cursor: pointer; font-weight: 700;
     font-size: .875rem; transition: all .15s; color: #667085; user-select: none;
     -webkit-tap-highlight-color: transparent;
+}
+@media (min-width: 640px) {
+    .likert-label { max-width: 80px; font-size: 1rem; border-radius: 14px; }
+    .likert-label .likert-sub { font-size: 10px; }
 }
 .dark .likert-label { border-color: #374151; color: #9ca3af; }
 input[type=radio]:checked + .likert-label {
