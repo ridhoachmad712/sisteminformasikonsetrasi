@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Tes Konsentrasi') — SINIKO</title>
+    <title>@yield('title', 'Tes Konsentrasi') — SI-KONSEN</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         document.addEventListener('alpine:init', () => {
@@ -34,9 +34,9 @@
 
             {{-- Logo --}}
             <a href="{{ route('beranda') }}" class="flex items-center gap-2 shrink-0">
-                <img src="/images/logo/dark.png" alt="SINIKO" class="w-8 h-8 object-contain shrink-0 dark:hidden">
-                <img src="/images/logo/white.png" alt="SINIKO" class="w-8 h-8 object-contain shrink-0 hidden dark:block">
-                <span class="font-bold text-gray-900 dark:text-white text-sm leading-none">SINIKO<br><span class="font-normal text-gray-400 text-xs">Konsentrasi</span></span>
+                <img src="/images/logo/dark.png" alt="SI-KONSEN" class="w-8 h-8 object-contain shrink-0 dark:hidden">
+                <img src="/images/logo/white.png" alt="SI-KONSEN" class="w-8 h-8 object-contain shrink-0 hidden dark:block">
+                <span class="font-bold text-gray-900 dark:text-white text-sm leading-none">SI-KONSEN<br><span class="font-normal text-gray-400 text-xs">Konsentrasi</span></span>
             </a>
 
             {{-- Right actions --}}

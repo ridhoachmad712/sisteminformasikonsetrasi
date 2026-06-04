@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Login — SINIKO</title>
+    <title>Login — SI-KONSEN</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
         document.addEventListener('alpine:init', () => {
@@ -50,10 +50,10 @@
     {{-- Logo --}}
     <div class="text-center mb-8">
         <div class="inline-flex items-center justify-center mb-4">
-            <img src="/images/logo/dark.png" alt="SINIKO" class="w-20 h-20 object-contain dark:hidden">
-            <img src="/images/logo/white.png" alt="SINIKO" class="w-20 h-20 object-contain hidden dark:block">
+            <img src="/images/logo/dark.png" alt="SI-KONSEN" class="w-20 h-20 object-contain dark:hidden">
+            <img src="/images/logo/white.png" alt="SI-KONSEN" class="w-20 h-20 object-contain hidden dark:block">
         </div>
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">SINIKO</h1>
+        <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">SI-KONSEN</h1>
         <p class="text-sm text-gray-400 mt-1">Sistem Informasi Konsentrasi — Prodi Manajemen</p>
     </div>
 

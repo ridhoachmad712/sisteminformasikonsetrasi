@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Admin') — SINIKO</title>
+    <title>@yield('title', 'Admin') — SI-KONSEN</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>[x-cloak]{display:none !important}</style>
@@ -84,11 +84,11 @@
             <div class="pt-8 pb-7 flex"
                 :class="(!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen) ? 'xl:justify-center' : 'justify-start'">
                 <a href="{{ route('admin.dashboard') }}" class="flex items-center gap-2">
-                    <img src="/images/logo/dark.png" alt="SINIKO" class="w-9 h-9 object-contain shrink-0 dark:hidden">
-                    <img src="/images/logo/white.png" alt="SINIKO" class="w-9 h-9 object-contain shrink-0 hidden dark:block">
+                    <img src="/images/logo/dark.png" alt="SI-KONSEN" class="w-9 h-9 object-contain shrink-0 dark:hidden">
+                    <img src="/images/logo/white.png" alt="SI-KONSEN" class="w-9 h-9 object-contain shrink-0 hidden dark:block">
                     <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                         class="text-gray-900 dark:text-white font-bold text-base leading-tight">
-                        SINIKO<br><span class="font-normal text-gray-500 text-xs">Konsentrasi</span>
+                        SI-KONSEN<br><span class="font-normal text-gray-500 text-xs">Konsentrasi</span>
                     </span>
                 </a>
             </div>
@@ -162,7 +162,7 @@
                         </button>
                         <div>
                             <h1 class="text-sm font-semibold text-gray-800 dark:text-white">@yield('page-title', 'Dashboard')</h1>
-                            <p class="text-xs text-gray-400">SINIKO — Sistem Informasi Konsentrasi</p>
+                            <p class="text-xs text-gray-400">SI-KONSEN — Sistem Informasi Konsentrasi</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-3">
