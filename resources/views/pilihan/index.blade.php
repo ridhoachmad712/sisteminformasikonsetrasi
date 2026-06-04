@@ -38,7 +38,7 @@
         @endif
     </div>
 
-    <form action="{{ route('pilihan.store') }}" method="POST" class="space-y-3">
+    <form id="form-pilihan" action="{{ route('pilihan.store') }}" method="POST" class="space-y-3">
         @csrf
 
         @php
@@ -119,7 +119,7 @@
                     class="h-11 rounded-xl border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                     Ubah
                 </button>
-                <button type="button" @click="showConfirm = false; $nextTick(() => document.querySelector('form').submit())"
+                <button type="button" @click="showConfirm = false; $nextTick(() => document.getElementById('form-pilihan').submit())"
                     class="h-11 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-sm font-semibold transition-colors">
                     Ya, Simpan
                 </button>
