@@ -75,7 +75,7 @@ input[type=radio]:checked + .likert-label {
                 @endif
             </div>
 
-            {{-- Baris bawah: progress soal --}}
+            {{-- Baris bawah: progress soal + save status --}}
             <div class="flex items-center gap-2">
                 <div class="flex-1 bg-gray-100 dark:bg-gray-800 rounded-full h-1.5 overflow-hidden">
                     <div class="h-1.5 rounded-full transition-all duration-300" style="background:{{ $iconColor }}"
@@ -83,6 +83,22 @@ input[type=radio]:checked + .likert-label {
                 </div>
                 <span class="text-xs font-bold tabular-nums shrink-0" style="color:{{ $iconColor }}"
                     x-text="answered + '/' + total"></span>
+                {{-- Indikator auto-save --}}
+                <span x-show="saveStatus === 'saving'" x-cloak
+                    class="flex items-center gap-1 text-xs text-gray-400 shrink-0">
+                    <svg class="w-3 h-3 animate-spin" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3" stroke-dasharray="60" stroke-dashoffset="15"/></svg>
+                    Menyimpan...
+                </span>
+                <span x-show="saveStatus === 'saved'" x-cloak
+                    class="flex items-center gap-1 text-xs text-success-500 shrink-0">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Tersimpan
+                </span>
+                <span x-show="saveStatus === 'error'" x-cloak
+                    class="flex items-center gap-1 text-xs text-error-500 shrink-0">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none"><path d="M12 8v4m0 4h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    Gagal simpan
+                </span>
             </div>
         </div>
     </div>
@@ -238,6 +254,50 @@ input[type=radio]:checked + .likert-label {
         </div>
     </div>
 
+    {{-- ══ MODAL KONFIRMASI KIRIM ══════════════════════════════ --}}
+    <div x-show="showConfirm" x-cloak
+        x-transition:enter="transition ease-out duration-200"
+        x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100"
+        class="fixed inset-0 z-[99999] flex items-center justify-center bg-gray-900/60 backdrop-blur-sm p-6">
+        <div class="bg-white dark:bg-gray-800 w-full max-w-sm rounded-2xl shadow-theme-lg p-6 text-center"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="scale-95 opacity-0"
+            x-transition:enter-end="scale-100 opacity-100">
+            <div class="inline-flex items-center justify-center w-14 h-14 rounded-full mb-4"
+                style="background:{{ $iconColor }}15">
+                <svg class="w-7 h-7" style="color:{{ $iconColor }}" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"
+                    stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h3 class="font-bold text-gray-900 dark:text-white text-lg mb-2">Kirim Jawaban?</h3>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-1">
+                Semua <span class="font-semibold text-gray-700 dark:text-gray-200" x-text="total"></span> pernyataan sudah dijawab.
+            </p>
+            <p class="text-xs text-warning-600 dark:text-warning-400 bg-warning-50 dark:bg-warning-500/10 rounded-xl px-3 py-2 mb-5">
+                ⚠️ Tes hanya dapat dikerjakan <strong>satu kali</strong>. Jawaban tidak dapat diubah setelah dikirim.
+            </p>
+            <div class="grid grid-cols-2 gap-3">
+                <button type="button" @click="showConfirm = false; showReview = true"
+                    class="h-12 rounded-xl border border-gray-300 dark:border-gray-600 text-sm font-medium text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+                    Periksa Lagi
+                </button>
+                <button type="button" @click="doSubmit()"
+                    :disabled="submitting"
+                    class="h-12 rounded-xl text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
+                    style="background:{{ $iconColor }}">
+                    <template x-if="!submitting">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </template>
+                    <template x-if="submitting">
+                        <svg class="w-4 h-4 animate-spin" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" stroke-dasharray="60" stroke-dashoffset="15"/></svg>
+                    </template>
+                    <span x-text="submitting ? 'Mengirim…' : 'Ya, Kirim'"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
 </div>
 @endsection
 
@@ -265,12 +325,14 @@ function tesData() {
         answered: 0,
         answeredIds: new Set(),
         showReview: false,
+        showConfirm: false,
         submitting: false,
         timeText: '--:--',
         timeLow: false,        // true jika sisa < 5 menit
         habis: false,
         isDirty: false,
         isSaving: false,
+        saveStatus: '',        // '', 'saving', 'saved', 'error'
         saveTimer: null,
 
         updateProgress() {
@@ -308,6 +370,13 @@ function tesData() {
                 return;
             }
             if (this.submitting) return;
+            // Tampilkan modal konfirmasi terlebih dahulu
+            this.showReview = false;
+            this.showConfirm = true;
+        },
+        doSubmit() {
+            if (this.submitting) return;
+            this.showConfirm = false;
             this.submitting = true;
             this.saveDraft(true);
             const form = document.getElementById('form-tes');
@@ -394,6 +463,7 @@ function tesData() {
         saveDraft(force = false) {
             if ((!this.isDirty && !force) || this.isSaving) return;
             this.isSaving = true; this.isDirty = false;
+            this.saveStatus = 'saving';
             const jawaban = {};
             document.querySelectorAll('input[type=radio]:checked').forEach(i => {
                 const m = i.name.match(/jawaban\[(\d+)\]/);
@@ -404,7 +474,15 @@ function tesData() {
                 credentials: 'same-origin',
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
                 body: JSON.stringify({ jawaban, jenis: JENIS }),
-            }).then(r => r.json()).then(() => { this.isSaving = false; }).catch(() => { this.isSaving = false; });
+            }).then(r => r.json()).then(() => {
+                this.isSaving = false;
+                this.saveStatus = 'saved';
+                setTimeout(() => { if (this.saveStatus === 'saved') this.saveStatus = ''; }, 3000);
+            }).catch(() => {
+                this.isSaving = false;
+                this.saveStatus = 'error';
+                setTimeout(() => { if (this.saveStatus === 'error') this.saveStatus = ''; }, 4000);
+            });
         },
 
         // ── Submit ─────────────────────────────────
