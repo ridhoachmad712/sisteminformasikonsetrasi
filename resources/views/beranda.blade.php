@@ -198,6 +198,26 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
         </a>
         @endif
 
+        {{-- Kartu Hasil Konsentrasi Final --}}
+        <div class="sm:col-span-2 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800 shrink-0">
+                    <svg class="w-5 h-5 text-gray-400 dark:text-gray-500" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <div class="flex-1 min-w-0">
+                    <h3 class="font-semibold text-gray-900 dark:text-white text-sm">Hasil Konsentrasi</h3>
+                    <p class="text-xs text-gray-400 leading-relaxed mt-0.5">
+                        Hasil konsentrasi final dapat dilihat setelah hasil perhitungan dan validasi dilakukan oleh Prodi.
+                    </p>
+                </div>
+                <span class="shrink-0 inline-flex items-center rounded-full bg-gray-100 dark:bg-gray-800 px-2.5 py-1 text-xs font-medium text-gray-400 dark:text-gray-500">
+                    Belum tersedia
+                </span>
+            </div>
+        </div>
+
     </div>
 
 
