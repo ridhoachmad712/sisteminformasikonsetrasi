@@ -159,7 +159,6 @@ arsort($allScores);
                 </tbody>
             </table>
         </div>
-        <p class="mt-3 text-xs text-gray-400 text-center">Formula: (Skor Minat / 75 × 100 × 60%) + (Skor Bakat / 50 × 100 × 40%)</p>
     </div>
 
     {{-- Nilai Mata Kuliah Pendukung (info pendukung, tidak memengaruhi hasil tes) --}}
