@@ -35,6 +35,11 @@ class MenuHelper
                         'name'  => 'Jadwal Tes',
                         'path'  => '/admin/jadwal',
                     ],
+                    [
+                        'icon'  => 'shield',
+                        'name'  => 'User Admin',
+                        'path'  => '/admin/users',
+                    ],
                 ],
             ],
         ];
@@ -57,6 +62,8 @@ class MenuHelper
             'charts' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.25 5.5C3.25 4.25736 4.25736 3.25 5.5 3.25H18.5C19.7426 3.25 20.75 4.25736 20.75 5.5V18.5C20.75 19.7426 19.7426 20.75 18.5 20.75H5.5C4.25736 20.75 3.25 19.7426 3.25 18.5V5.5ZM5.5 4.75C5.08579 4.75 4.75 5.08579 4.75 5.5V8.58H19.25V5.5C19.25 5.08579 18.9142 4.75 18.5 4.75H5.5ZM19.25 10.08H15.42V13.92H19.25V10.08ZM13.92 10.08H10.08V13.92H13.92V10.08ZM8.58 10.08H4.75V13.92H8.58V10.08ZM4.75 18.5V15.42H8.58V19.25H5.5C5.08579 19.25 4.75 18.9142 4.75 18.5ZM10.08 19.25V15.42H13.92V19.25H10.08ZM15.42 19.25V15.42H19.25V18.5C19.25 18.9142 18.9142 19.25 18.5 19.25H15.42Z" fill="currentColor"/></svg>',
 
             'calendar' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M8 2C8.41421 2 8.75 2.33579 8.75 2.75V3.75H15.25V2.75C15.25 2.33579 15.5858 2 16 2C16.4142 2 16.75 2.33579 16.75 2.75V3.75H18.5C19.7426 3.75 20.75 4.75736 20.75 6V9V19C20.75 20.2426 19.7426 21.25 18.5 21.25H5.5C4.25736 21.25 3.25 20.2426 3.25 19V9V6C3.25 4.75736 4.25736 3.75 5.5 3.75H7.25V2.75C7.25 2.33579 7.58579 2 8 2ZM8 5.25H5.5C5.08579 5.25 4.75 5.58579 4.75 6V8.25H19.25V6C19.25 5.58579 18.9142 5.25 18.5 5.25H16H8ZM19.25 9.75H4.75V19C4.75 19.4142 5.08579 19.75 5.5 19.75H18.5C18.9142 19.75 19.25 19.4142 19.25 19V9.75Z" fill="currentColor"/></svg>',
+
+            'shield' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L4 5v6c0 5.5 3.5 10 8 11 4.5-1 8-5.5 8-11V5l-8-3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
         ];
 
         return $icons[$iconName] ?? '<svg class="size-6" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>';
