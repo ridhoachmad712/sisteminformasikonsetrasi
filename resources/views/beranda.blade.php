@@ -168,21 +168,6 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
             </div>
         </a>
 
-        {{-- Kartu Profil --}}
-        <a href="{{ route('profil.index') }}"
-            class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-gray-300 dark:hover:border-gray-700 hover:shadow-theme-sm transition-all">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800">
-                    <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" viewBox="0 0 24 24" fill="none">
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.5C7.306 3.5 3.5 7.306 3.5 12c0 2.153.8 4.118 2.119 5.616.553-2.306 2.629-4.021 5.105-4.021h2.55c2.476 0 4.552 1.715 5.105 4.021C19.699 16.118 20.5 14.153 20.5 12c0-4.694-3.806-8.5-8.5-8.5zM12 12.786c1.114 0 2.017-.903 2.017-2.018 0-1.114-.903-2.017-2.017-2.017-1.115 0-2.018.903-2.018 2.017 0 1.115.903 2.018 2.018 2.018z" fill="currentColor"/>
-                    </svg>
-                </div>
-                <svg class="w-4 h-4 text-gray-300 dark:text-gray-700 group-hover:text-gray-500 transition-colors" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Profil Saya</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">Lihat data diri dan ringkasan hasil tes Anda.</p>
-        </a>
-
     </div>
 
     {{-- ── Info jadwal (jika ada yang berlangsung/segera) ────── --}}

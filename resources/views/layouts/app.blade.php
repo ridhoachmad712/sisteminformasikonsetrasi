@@ -49,12 +49,14 @@
                     <svg class="hidden dark:block w-4 h-4" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="3.5" fill="currentColor"/><path d="M10 1.5v2M10 16.5v2M1.5 10h2M16.5 10h2M4.1 4.1l1.4 1.4M14.5 14.5l1.4 1.4M14.5 5.5l1.4-1.4M4.1 15.9l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 </button>
 
-                {{-- Avatar + nama --}}
-                <a href="{{ route('profil.index') }}" class="flex items-center gap-2 hover:opacity-80 transition-opacity">
+                {{-- Avatar + nama → Profil --}}
+                <a href="{{ route('profil.index') }}"
+                    title="Profil Saya"
+                    class="flex items-center gap-2 px-2 py-1 rounded-full hover:bg-gray-100 dark:hover:bg-white/5 transition-colors">
                     <div class="flex items-center justify-center w-8 h-8 rounded-full bg-brand-100 dark:bg-brand-500/20 text-brand-600 dark:text-brand-400 text-xs font-bold shrink-0">
                         {{ strtoupper(substr(session('mahasiswa_nama','M'), 0, 1)) }}
                     </div>
-                    <span class="hidden sm:block text-sm font-medium text-gray-700 dark:text-gray-300 max-w-[120px] truncate">
+                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300 max-w-[110px] sm:max-w-[150px] truncate hidden xsm:block">
                         {{ session('mahasiswa_nama') }}
                     </span>
                 </a>
@@ -82,13 +84,12 @@
     {{-- BOTTOM NAV — mobile only (disembunyikan saat mengerjakan tes) --}}
     @if(session('mahasiswa_id') && !View::hasSection('hide-bottom-nav'))
     <nav class="fixed bottom-0 left-0 right-0 z-[9998] bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 sm:hidden safe-bottom">
-        <div class="grid grid-cols-3 h-16">
+        <div class="grid grid-cols-2 h-16">
             @php
                 $currentRoute = Route::currentRouteName();
                 $navItems = [
                     ['route' => 'beranda',     'label' => 'Beranda', 'icon' => '<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'],
                     ['route' => 'tes.index',   'label' => 'Tes',     'icon' => '<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'],
-                    ['route' => 'profil.index','label' => 'Profil',  'icon' => '<path fill-rule="evenodd" clip-rule="evenodd" d="M12 3.5C7.306 3.5 3.5 7.306 3.5 12c0 2.153.8 4.118 2.119 5.616.553-2.306 2.629-4.021 5.105-4.021h2.55c2.476 0 4.552 1.715 5.105 4.021C19.699 16.118 20.5 14.153 20.5 12c0-4.694-3.806-8.5-8.5-8.5zM12 12.786c1.114 0 2.017-.903 2.017-2.018 0-1.114-.903-2.017-2.017-2.017-1.115 0-2.018.903-2.018 2.017 0 1.115.903 2.018 2.018 2.018z" fill="currentColor"/>'],
                 ];
             @endphp
             @foreach($navItems as $item)
