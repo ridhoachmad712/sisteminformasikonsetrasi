@@ -134,10 +134,8 @@
             </a>
             <button type="submit"
                 :disabled="!bisaSubmit"
-                :class="bisaSubmit
-                    ? 'bg-brand-500 hover:bg-brand-600 text-white cursor-pointer'
-                    : 'bg-gray-200 dark:bg-gray-700 text-gray-400 dark:text-gray-500 cursor-not-allowed'"
-                class="flex-1 h-12 rounded-xl text-sm font-semibold transition-colors flex items-center justify-center gap-2">
+                :class="!bisaSubmit ? 'opacity-40 cursor-not-allowed' : 'cursor-pointer'"
+                class="flex-1 h-12 rounded-xl bg-brand-500 hover:bg-brand-600 text-white text-sm font-semibold transition-all flex items-center justify-center gap-2">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/><polyline points="17,21 17,13 7,13 7,21" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
                 Simpan Nilai
             </button>
