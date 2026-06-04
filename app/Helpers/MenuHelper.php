@@ -7,44 +7,38 @@ class MenuHelper
     public static function getMenuGroups(): array
     {
         return [
+            // ── Beranda ───────────────────────────────────────────
             [
-                'title' => 'Menu Utama',
+                'title' => 'Beranda',
                 'items' => [
-                    [
-                        'icon'  => 'dashboard',
-                        'name'  => 'Dashboard',
-                        'path'  => '/admin',
-                    ],
-                    [
-                        'icon'  => 'user-profile',
-                        'name'  => 'Data Mahasiswa',
-                        'path'  => '/admin/mahasiswa',
-                    ],
-                    [
-                        'icon'  => 'forms',
-                        'name'  => 'Kelola Soal',
-                        'path'  => '/admin/soal',
-                    ],
-                    [
-                        'icon'  => 'charts',
-                        'name'  => 'Hasil Tes',
-                        'path'  => '/admin/hasil',
-                    ],
-                    [
-                        'icon'  => 'clipboard',
-                        'name'  => 'Rekap Konsentrasi',
-                        'path'  => '/admin/rekap',
-                    ],
-                    [
-                        'icon'  => 'calendar',
-                        'name'  => 'Jadwal Tes',
-                        'path'  => '/admin/jadwal',
-                    ],
-                    [
-                        'icon'  => 'shield',
-                        'name'  => 'User Admin',
-                        'path'  => '/admin/users',
-                    ],
+                    ['icon' => 'dashboard', 'name' => 'Dashboard', 'path' => '/admin'],
+                ],
+            ],
+
+            // ── Manajemen Tes ─────────────────────────────────────
+            [
+                'title' => 'Manajemen Tes',
+                'items' => [
+                    ['icon' => 'forms',    'name' => 'Kelola Soal', 'path' => '/admin/soal'],
+                    ['icon' => 'calendar', 'name' => 'Jadwal Tes',  'path' => '/admin/jadwal'],
+                ],
+            ],
+
+            // ── Data & Hasil ──────────────────────────────────────
+            [
+                'title' => 'Data & Hasil',
+                'items' => [
+                    ['icon' => 'user-profile', 'name' => 'Data Mahasiswa',     'path' => '/admin/mahasiswa'],
+                    ['icon' => 'charts',       'name' => 'Hasil Tes',          'path' => '/admin/hasil'],
+                    ['icon' => 'clipboard',    'name' => 'Rekap Konsentrasi',  'path' => '/admin/rekap'],
+                ],
+            ],
+
+            // ── Pengaturan ────────────────────────────────────────
+            [
+                'title' => 'Pengaturan',
+                'items' => [
+                    ['icon' => 'shield', 'name' => 'User Admin', 'path' => '/admin/users'],
                 ],
             ],
         ];
