@@ -41,7 +41,7 @@
             <a href="{{ route('beranda') }}" class="flex items-center gap-2 shrink-0">
                 <img src="/images/logo/dark.png" alt="SI-KONSEN" class="w-8 h-8 object-contain shrink-0 dark:hidden">
                 <img src="/images/logo/white.png" alt="SI-KONSEN" class="w-8 h-8 object-contain shrink-0 hidden dark:block">
-                <span class="font-bold text-gray-900 dark:text-white text-sm leading-none">SI-KONSEN<br><span class="font-normal text-gray-400 text-xs">Konsentrasi</span></span>
+                <span class="font-bold text-gray-900 dark:text-white text-sm leading-none">SI-KONSEN<br><span class="font-normal text-gray-400 text-xs">Prodi Manajemen</span></span>
             </a>
 
             {{-- Right actions --}}

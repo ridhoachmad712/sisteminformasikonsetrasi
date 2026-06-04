@@ -54,7 +54,8 @@
             <img src="/images/logo/white.png" alt="SI-KONSEN" class="w-20 h-20 object-contain hidden dark:block">
         </div>
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white tracking-tight">SI-KONSEN</h1>
-        <p class="text-sm text-gray-400 mt-1">Sistem Informasi Konsentrasi — Prodi Manajemen</p>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mt-1 font-medium">Sistem Informasi Konsentrasi</p>
+        <p class="text-xs text-gray-400 mt-0.5">Prodi Manajemen FEB UNM</p>
     </div>
 
     {{-- Card --}}

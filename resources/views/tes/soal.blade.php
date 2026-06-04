@@ -401,6 +401,7 @@ function tesData() {
             });
             fetch('{{ route("tes.draft") }}', {
                 method: 'POST',
+                credentials: 'same-origin',
                 headers: { 'Content-Type': 'application/json', 'X-CSRF-TOKEN': CSRF },
                 body: JSON.stringify({ jawaban, jenis: JENIS }),
             }).then(r => r.json()).then(() => { this.isSaving = false; }).catch(() => { this.isSaving = false; });
