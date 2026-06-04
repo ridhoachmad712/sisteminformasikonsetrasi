@@ -67,24 +67,39 @@
                 </select>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+            @php
+                $durasiTersimpan = (int) $jadwal->tanggal_mulai->diffInMinutes($jadwal->tanggal_selesai);
+            @endphp
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5"
+                x-data="{
+                    mulai: '{{ old('tanggal_mulai', $jadwal->tanggal_mulai->format('Y-m-d\TH:i')) }}',
+                    durasi: {{ old('durasi', $durasiTersimpan) }},
+                    get selesai() {
+                        if (!this.mulai || !this.durasi) return '—';
+                        const d = new Date(this.mulai);
+                        d.setMinutes(d.getMinutes() + parseInt(this.durasi));
+                        const pad = n => String(n).padStart(2,'0');
+                        return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())} WITA`;
+                    }
+                }">
                 <div>
                     <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                         Tanggal & Waktu Mulai <span class="text-error-500">*</span>
                     </label>
-                    <input type="datetime-local" name="tanggal_mulai" required
-                        value="{{ old('tanggal_mulai', $jadwal->tanggal_mulai->format('Y-m-d\TH:i')) }}"
+                    <input type="datetime-local" name="tanggal_mulai" x-model="mulai" required
                         class="shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 h-11 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 text-sm text-gray-800 dark:text-white focus:ring-3 focus:outline-none dark:bg-gray-900">
                     @error('tanggal_mulai')<p class="mt-1 text-xs text-error-500">{{ $message }}</p>@enderror
                 </div>
                 <div>
                     <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                        Tanggal & Waktu Selesai <span class="text-error-500">*</span>
+                        Durasi (menit) <span class="text-error-500">*</span>
                     </label>
-                    <input type="datetime-local" name="tanggal_selesai" required
-                        value="{{ old('tanggal_selesai', $jadwal->tanggal_selesai->format('Y-m-d\TH:i')) }}"
+                    <input type="number" name="durasi" x-model="durasi" min="5" max="1440" step="5" required
                         class="shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 h-11 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 text-sm text-gray-800 dark:text-white focus:ring-3 focus:outline-none dark:bg-gray-900">
-                    @error('tanggal_selesai')<p class="mt-1 text-xs text-error-500">{{ $message }}</p>@enderror
+                    <p class="mt-1 text-xs text-gray-400">
+                        Selesai otomatis: <span class="font-medium text-brand-600 dark:text-brand-400" x-text="selesai">—</span>
+                    </p>
+                    @error('durasi')<p class="mt-1 text-xs text-error-500">{{ $message }}</p>@enderror
                 </div>
             </div>
 

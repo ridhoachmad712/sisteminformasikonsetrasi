@@ -23,22 +23,26 @@ class JadwalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama'             => 'required|string|max:100',
-            'jenis_tes'        => 'nullable|in:minat,bakat',
-            'angkatan'         => 'nullable|digits:4',
-            'tanggal_mulai'    => 'required|date',
-            'tanggal_selesai'  => 'required|date|after:tanggal_mulai',
-            'keterangan'       => 'nullable|string|max:500',
+            'nama'          => 'required|string|max:100',
+            'jenis_tes'     => 'nullable|in:minat,bakat',
+            'angkatan'      => 'nullable|digits:4',
+            'tanggal_mulai' => 'required|date',
+            'durasi'        => 'required|integer|min:5|max:1440',
+            'keterangan'    => 'nullable|string|max:500',
         ], [
-            'tanggal_selesai.after' => 'Tanggal selesai harus setelah tanggal mulai.',
+            'durasi.min' => 'Durasi minimal 5 menit.',
+            'durasi.max' => 'Durasi maksimal 1440 menit (24 jam).',
         ]);
+
+        $mulai   = \Carbon\Carbon::parse($request->tanggal_mulai);
+        $selesai = (clone $mulai)->addMinutes((int) $request->durasi);
 
         \App\Models\JadwalTes::create([
             'nama'            => $request->nama,
             'jenis_tes'       => $request->jenis_tes ?: null,
             'angkatan'        => $request->angkatan ?: null,
-            'tanggal_mulai'   => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
+            'tanggal_mulai'   => $mulai,
+            'tanggal_selesai' => $selesai,
             'aktif'           => $request->boolean('aktif', true),
             'keterangan'      => $request->keterangan,
         ]);
@@ -55,22 +59,26 @@ class JadwalController extends Controller
     public function update(Request $request, \App\Models\JadwalTes $jadwal)
     {
         $request->validate([
-            'nama'            => 'required|string|max:100',
-            'jenis_tes'       => 'nullable|in:minat,bakat',
-            'angkatan'        => 'nullable|digits:4',
-            'tanggal_mulai'   => 'required|date',
-            'tanggal_selesai' => 'required|date|after:tanggal_mulai',
-            'keterangan'      => 'nullable|string|max:500',
+            'nama'          => 'required|string|max:100',
+            'jenis_tes'     => 'nullable|in:minat,bakat',
+            'angkatan'      => 'nullable|digits:4',
+            'tanggal_mulai' => 'required|date',
+            'durasi'        => 'required|integer|min:5|max:1440',
+            'keterangan'    => 'nullable|string|max:500',
         ], [
-            'tanggal_selesai.after' => 'Tanggal selesai harus setelah tanggal mulai.',
+            'durasi.min' => 'Durasi minimal 5 menit.',
+            'durasi.max' => 'Durasi maksimal 1440 menit (24 jam).',
         ]);
+
+        $mulai   = \Carbon\Carbon::parse($request->tanggal_mulai);
+        $selesai = (clone $mulai)->addMinutes((int) $request->durasi);
 
         $jadwal->update([
             'nama'            => $request->nama,
             'jenis_tes'       => $request->jenis_tes ?: null,
             'angkatan'        => $request->angkatan ?: null,
-            'tanggal_mulai'   => $request->tanggal_mulai,
-            'tanggal_selesai' => $request->tanggal_selesai,
+            'tanggal_mulai'   => $mulai,
+            'tanggal_selesai' => $selesai,
             'aktif'           => $request->boolean('aktif'),
             'keterangan'      => $request->keterangan,
         ]);

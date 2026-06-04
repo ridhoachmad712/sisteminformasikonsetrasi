@@ -119,6 +119,8 @@ $jadwalAktif = \App\Models\JadwalTes::where('aktif', true)
                     <td class="px-4 py-4">
                         <p class="text-gray-700 dark:text-gray-300 text-xs font-medium">{{ $j->tanggal_selesai->format('d M Y') }}</p>
                         <p class="text-gray-400 text-xs">{{ $j->tanggal_selesai->format('H:i') }} WITA</p>
+                        @php $menit = (int) $j->tanggal_mulai->diffInMinutes($j->tanggal_selesai); @endphp
+                        <p class="text-brand-500 text-xs mt-1 font-medium">⏱ {{ $menit >= 60 ? floor($menit/60).'j '.($menit%60 ? ($menit%60).'m' : '') : $menit.' menit' }}</p>
                     </td>
                     <td class="px-4 py-4 text-center">
                         <span class="inline-flex items-center rounded-full px-2.5 py-1 text-xs font-semibold {{ $statusConfig[0] }}">
