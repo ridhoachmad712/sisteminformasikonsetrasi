@@ -23,6 +23,12 @@
                 @if($mahasiswa->email)
                 <p class="text-sm text-gray-500 dark:text-gray-400">{{ $mahasiswa->email }}</p>
                 @endif
+                @if($mahasiswa->dosenPa)
+                <p class="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                    <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    PA: {{ $mahasiswa->dosenPa->nama }}
+                </p>
+                @endif
             </div>
             <div class="ml-auto">
                 @if($mahasiswa->sudah_tes)
