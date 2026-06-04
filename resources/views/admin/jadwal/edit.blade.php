@@ -69,25 +69,36 @@
             @php
                 $durasiTersimpan = (int) $jadwal->tanggal_mulai->diffInMinutes($jadwal->tanggal_selesai);
             @endphp
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5"
+            <div class="space-y-5"
                 x-data="{
-                    mulai: '{{ old('tanggal_mulai', $jadwal->tanggal_mulai->format('Y-m-d\TH:i')) }}',
+                    tgl: '{{ old('tanggal_mulai_date', $jadwal->tanggal_mulai->format('Y-m-d')) }}',
+                    jam: '{{ old('tanggal_mulai_time', $jadwal->tanggal_mulai->format('H:i')) }}',
                     durasi: {{ old('durasi', $durasiTersimpan) }},
                     get selesai() {
-                        if (!this.mulai || !this.durasi) return '—';
-                        const d = new Date(this.mulai);
+                        if (!this.tgl || !this.jam || !this.durasi) return '—';
+                        const d = new Date(this.tgl + 'T' + this.jam);
                         d.setMinutes(d.getMinutes() + parseInt(this.durasi));
                         const pad = n => String(n).padStart(2,'0');
                         return `${pad(d.getDate())}/${pad(d.getMonth()+1)}/${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())} WITA`;
                     }
                 }">
-                <div>
-                    <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
-                        Tanggal & Waktu Mulai <span class="text-error-500">*</span>
-                    </label>
-                    <input type="datetime-local" name="tanggal_mulai" x-model="mulai" required
-                        class="shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 h-11 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 text-sm text-gray-800 dark:text-white focus:ring-3 focus:outline-none dark:bg-gray-900">
-                    @error('tanggal_mulai')<p class="mt-1 text-xs text-error-500">{{ $message }}</p>@enderror
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Tanggal Mulai <span class="text-error-500">*</span>
+                        </label>
+                        <input type="date" name="tanggal_mulai_date" x-model="tgl" required
+                            class="shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 h-11 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 text-sm text-gray-800 dark:text-white focus:ring-3 focus:outline-none dark:bg-gray-900">
+                        @error('tanggal_mulai_date')<p class="mt-1 text-xs text-error-500">{{ $message }}</p>@enderror
+                    </div>
+                    <div>
+                        <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
+                            Waktu Mulai <span class="text-error-500">*</span>
+                        </label>
+                        <input type="time" name="tanggal_mulai_time" x-model="jam" required
+                            class="shadow-theme-xs focus:border-brand-300 focus:ring-brand-500/10 h-11 w-full rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-4 text-sm text-gray-800 dark:text-white focus:ring-3 focus:outline-none dark:bg-gray-900">
+                        @error('tanggal_mulai_time')<p class="mt-1 text-xs text-error-500">{{ $message }}</p>@enderror
+                    </div>
                 </div>
                 <div>
                     <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
