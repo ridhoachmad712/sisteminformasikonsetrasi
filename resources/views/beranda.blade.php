@@ -200,6 +200,16 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
 
     </div>
 
+    {{-- Footer --}}
+    <div class="pt-2 pb-6 text-center">
+        <p class="text-xs text-gray-400">
+            This App developed by
+            <a href="https://www.instagram.com/ridhoachmad_/" target="_blank" rel="noopener noreferrer"
+                class="font-medium text-brand-500 hover:text-brand-600 transition-colors">
+                @ridhoachmad_
+            </a>
+        </p>
+    </div>
 
 </div>
 @endsection
