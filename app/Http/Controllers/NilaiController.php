@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use App\Models\Mahasiswa;
 use App\Models\DosenPa;
 
@@ -46,7 +47,7 @@ class NilaiController extends Controller
         // Aturan validasi: IPK + setiap mata kuliah wajib & harus salah satu nilai valid
         $rules = [
             'ipk'         => ['required', 'numeric', 'between:0,4'],
-            'dosen_pa_id' => ['required', 'exists:dosen_pa,id'],
+            'dosen_pa_id' => ['required', Rule::exists('dosen_pa', 'id')->where('aktif', true)],
             'pernyataan'  => ['accepted'],
         ];
         foreach ($semuaKey as $key) {

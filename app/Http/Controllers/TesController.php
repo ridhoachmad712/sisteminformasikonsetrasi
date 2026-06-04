@@ -344,8 +344,13 @@ class TesController extends Controller
     {
         $soalList = self::getCachedSoal($jenis)->keyBy('id');
 
-        // Akumulasi skor per konsentrasi
-        $skor = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
+        // Akumulasi skor & snapshot jumlah soal per konsentrasi
+        $skor     = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
+        $jmlSoal  = [
+            'pemasaran' => $soalList->where('konsentrasi', 'pemasaran')->count(),
+            'keuangan'  => $soalList->where('konsentrasi', 'keuangan')->count(),
+            'sdm'       => $soalList->where('konsentrasi', 'sdm')->count(),
+        ];
 
         foreach ($jawaban as $soalId => $nilai) {
             $soal = $soalList->get($soalId);
@@ -355,7 +360,15 @@ class TesController extends Controller
             $skor[$soal->konsentrasi] += $nilai;
         }
 
-        return DB::transaction(function () use ($mahasiswa, $jawaban, $soalList, $skor, $jenis) {
+        return DB::transaction(function () use ($mahasiswa, $jawaban, $soalList, $skor, $jmlSoal, $jenis) {
+            // Lock baris mahasiswa untuk cegah double submit
+            $mahasiswa = Mahasiswa::lockForUpdate()->findOrFail($mahasiswa->id);
+            $sudahKey  = "sudah_tes_{$jenis}";
+            if ($mahasiswa->$sudahKey) {
+                return HasilTes::where('mahasiswa_id', $mahasiswa->id)->latest()->first()
+                    ?? new HasilTes();
+            }
+
             // Cari atau buat HasilTes untuk mahasiswa ini
             $hasil = HasilTes::firstOrCreate(
                 ['mahasiswa_id' => $mahasiswa->id],
@@ -366,13 +379,17 @@ class TesController extends Controller
                 ]
             );
 
-            // Update skor untuk jenis ini
-            $prefix = "skor_{$jenis}_";
+            // Update skor + simpan snapshot jumlah soal saat submit
+            $prefix    = "skor_{$jenis}_";
+            $jmlPrefix = "jml_soal_{$jenis}_";
             $hasil->update([
-                "{$prefix}pemasaran" => $skor['pemasaran'],
-                "{$prefix}keuangan"  => $skor['keuangan'],
-                "{$prefix}sdm"       => $skor['sdm'],
-                "sudah_{$jenis}"     => true,
+                "{$prefix}pemasaran"    => $skor['pemasaran'],
+                "{$prefix}keuangan"     => $skor['keuangan'],
+                "{$prefix}sdm"          => $skor['sdm'],
+                "{$jmlPrefix}pemasaran" => $jmlSoal['pemasaran'],
+                "{$jmlPrefix}keuangan"  => $jmlSoal['keuangan'],
+                "{$jmlPrefix}sdm"       => $jmlSoal['sdm'],
+                "sudah_{$jenis}"        => true,
             ]);
 
             // Batch insert detail jawaban — 1 query, bukan N query

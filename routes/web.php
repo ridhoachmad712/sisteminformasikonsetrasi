@@ -44,7 +44,7 @@ Route::middleware('auth.mahasiswa')->group(function () {
     // Auto-save draft — rate limited
     Route::post('/tes/draft', [TesController::class, 'saveDraft'])
         ->name('tes.draft')
-        ->middleware('throttle:auto-save');
+        ->middleware(['auth.mahasiswa', 'throttle:auto-save']);
 
     // Submit — rate limited (anti double-submit)
     // (throttle ditaruh di controller, tapi tambah layer di sini juga)

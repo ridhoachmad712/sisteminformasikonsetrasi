@@ -13,6 +13,8 @@ class HasilTes extends Model
         'sudah_minat', 'sudah_bakat', 'lengkap',
         'skor_minat_pemasaran', 'skor_minat_keuangan', 'skor_minat_sdm',
         'skor_bakat_pemasaran', 'skor_bakat_keuangan', 'skor_bakat_sdm',
+        'jml_soal_minat_pemasaran', 'jml_soal_minat_keuangan', 'jml_soal_minat_sdm',
+        'jml_soal_bakat_pemasaran', 'jml_soal_bakat_keuangan', 'jml_soal_bakat_sdm',
     ];
 
     protected $casts = [
@@ -29,12 +31,12 @@ class HasilTes extends Model
     {
         $hasil = [];
         foreach (['pemasaran', 'keuangan', 'sdm'] as $k) {
-            $minatRaw  = $this->{"skor_minat_{$k}"};
-            $bakatRaw  = $this->{"skor_bakat_{$k}"};
+            $minatRaw = $this->{"skor_minat_{$k}"};
+            $bakatRaw = $this->{"skor_bakat_{$k}"};
 
-            // Hitung max dari jumlah soal aktif
-            $jmlMinat = \App\Models\Soal::where('aktif', true)->where('jenis','minat')->where('konsentrasi',$k)->count() ?: 1;
-            $jmlBakat = \App\Models\Soal::where('aktif', true)->where('jenis','bakat')->where('konsentrasi',$k)->count() ?: 1;
+            // Gunakan snapshot jumlah soal saat submit — bukan jumlah soal aktif saat ini
+            $jmlMinat = $this->{"jml_soal_minat_{$k}"} ?: 1;
+            $jmlBakat = $this->{"jml_soal_bakat_{$k}"} ?: 1;
 
             $hasil[$k] = round(
                 ($minatRaw / ($jmlMinat * 5) * 100 * 0.6) +
