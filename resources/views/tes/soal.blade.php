@@ -196,9 +196,8 @@ input[type=radio]:checked + .likert-label {
                         <button type="button" @click="jumpTo(item.id)"
                             class="aspect-square rounded-lg text-xs font-bold flex items-center justify-center border transition-colors"
                             :class="isAnswered(item.id)
-                                ? 'text-white border-transparent'
+                                ? 'text-white border-transparent bg-success-500'
                                 : 'bg-error-50 dark:bg-error-500/10 text-error-600 dark:text-error-400 border-error-200 dark:border-error-800'"
-                            :style="isAnswered(item.id) ? 'background:{{ $iconColor }}' : ''"
                             x-text="item.no"></button>
                     </template>
                 </div>
