@@ -35,11 +35,11 @@ Route::middleware('auth.mahasiswa')->group(function () {
 
     // Tes Minat
     Route::get('/tes/minat', [TesController::class, 'minat'])->name('tes.minat');
-    Route::post('/tes/minat/submit', [TesController::class, 'submitMinat'])->name('tes.minat.submit');
+    Route::post('/tes/minat/submit', [TesController::class, 'submitMinat'])->name('tes.minat.submit')->middleware('throttle:tes-submit');
 
     // Tes Bakat
     Route::get('/tes/bakat', [TesController::class, 'bakat'])->name('tes.bakat');
-    Route::post('/tes/bakat/submit', [TesController::class, 'submitBakat'])->name('tes.bakat.submit');
+    Route::post('/tes/bakat/submit', [TesController::class, 'submitBakat'])->name('tes.bakat.submit')->middleware('throttle:tes-submit');
 
     // Auto-save draft — rate limited
     Route::post('/tes/draft', [TesController::class, 'saveDraft'])
