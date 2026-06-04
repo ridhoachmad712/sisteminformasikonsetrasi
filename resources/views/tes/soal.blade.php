@@ -55,7 +55,7 @@ input[type=radio]:checked + .likert-label {
     </div>
 
     {{-- Progress + Countdown sticky --}}
-    <div class="sticky top-14 z-40 mb-3 -mx-4 px-4 pt-2 pb-2 bg-gray-50 dark:bg-gray-900">
+    <div class="sticky z-40 mb-3 -mx-4 px-4 pt-2 pb-2 bg-gray-50 dark:bg-gray-900" style="top: calc(3.5rem + env(safe-area-inset-top))">
         <div class="rounded-xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 px-4 py-3 shadow-theme-xs">
 
             {{-- Baris atas: judul + countdown --}}

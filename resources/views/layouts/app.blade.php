@@ -3,6 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#101828" media="(prefers-color-scheme: dark)">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', 'Tes Konsentrasi') — SI-KONSEN</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -29,7 +33,7 @@
     <x-common.preloader />
 
     {{-- NAVBAR --}}
-    <header class="sticky top-0 z-[9999] bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800"
+    <header class="fixed top-0 left-0 right-0 z-[9999] bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800"
         style="padding-top: env(safe-area-inset-top)">
         <div class="max-w-2xl mx-auto px-4 h-14 flex items-center justify-between gap-3">
 
@@ -83,7 +87,7 @@
     </header>
 
     {{-- CONTENT --}}
-    <main class="max-w-2xl mx-auto px-4 py-5 pb-6">
+    <main class="max-w-2xl mx-auto px-4 py-5 pb-6" style="margin-top: calc(3.5rem + env(safe-area-inset-top))">
 
         @if(session('success'))
         <div x-data="{show:true}" x-show="show"
