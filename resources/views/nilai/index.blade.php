@@ -32,7 +32,7 @@
         x-data="{
             ipk: '{{ old('ipk', $mahasiswa->ipk) }}',
             dosenPa: '{{ old('dosen_pa_id', $mahasiswa->dosen_pa_id) }}',
-            nilai: {!! json_encode(old('nilai', $nilai ?? [])) !!},
+            nilai: {!! json_encode(collect($mataKuliah)->keys()->mapWithKeys(fn($k) => [$k => old("nilai.$k", $nilai[$k] ?? '')])->toArray()) !!},
             pernyataan: false,
             totalMk: {{ count($mataKuliah) }},
             get mkTerisi() {
