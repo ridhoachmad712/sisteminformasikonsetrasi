@@ -161,40 +161,6 @@ arsort($allScores);
         </div>
     </div>
 
-    {{-- Nilai Mata Kuliah Pendukung (info pendukung, tidak memengaruhi hasil tes) --}}
-    @php $mkData = $mahasiswa->nilaiMkPerKonsentrasi(); @endphp
-    @if($mkData)
-    <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 sm:p-6">
-        <div class="flex items-center justify-between mb-1">
-            <h3 class="font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-7 .91 12 12 0 01-7-.91 12 12 0 01.84-4.42L12 14z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Nilai Akademik Pendukung
-            </h3>
-            @if($mahasiswa->ipk !== null)
-            <span class="inline-flex items-center gap-1.5 rounded-lg bg-brand-50 dark:bg-brand-500/10 px-3 py-1.5 text-sm">
-                <span class="text-xs text-gray-400">IPK</span>
-                <span class="font-bold text-brand-600 dark:text-brand-400">{{ number_format($mahasiswa->ipk, 2) }}</span>
-            </span>
-            @endif
-        </div>
-        <p class="text-xs text-gray-400 mb-4">Rata-rata nilai mata kuliah per konsentrasi (skala 0–100). Sebagai bahan pertimbangan tambahan, tidak memengaruhi nilai tes di atas.</p>
-
-        <div class="space-y-3">
-            @foreach($mkData as $mk)
-            <div>
-                <div class="flex items-center justify-between mb-1">
-                    <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $mk['label'] }}</span>
-                    <span class="text-sm font-bold" style="color:{{ $mk['warna'] }}">{{ $mk['avg'] }}</span>
-                </div>
-                <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2 overflow-hidden">
-                    <div class="h-2 rounded-full" style="width:{{ $mk['avg'] }}%; background:{{ $mk['warna'] }}"></div>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-    @endif
-
     {{-- Logout --}}
     <div class="text-center pb-6">
         <form action="{{ route('logout.mahasiswa') }}" method="POST" class="inline">
