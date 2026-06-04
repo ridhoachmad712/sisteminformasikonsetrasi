@@ -81,32 +81,8 @@
         </div>
     </header>
 
-    {{-- BOTTOM NAV — mobile only (disembunyikan saat mengerjakan tes) --}}
-    @if(session('mahasiswa_id') && !View::hasSection('hide-bottom-nav'))
-    <nav class="fixed bottom-0 left-0 right-0 z-[9998] bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800 sm:hidden safe-bottom">
-        <div class="grid grid-cols-2 h-16">
-            @php
-                $currentRoute = Route::currentRouteName();
-                $navItems = [
-                    ['route' => 'beranda',     'label' => 'Beranda', 'icon' => '<path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'],
-                    ['route' => 'tes.index',   'label' => 'Tes',     'icon' => '<path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>'],
-                ];
-            @endphp
-            @foreach($navItems as $item)
-            @php $active = str_starts_with($currentRoute ?? '', explode('.', $item['route'])[0]); @endphp
-            <a href="{{ route($item['route']) }}"
-                class="flex flex-col items-center justify-center gap-1 text-xs transition-colors
-                    {{ $active ? 'text-brand-500' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-300' }}">
-                <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none">{!! $item['icon'] !!}</svg>
-                <span class="text-[10px] font-medium">{{ $item['label'] }}</span>
-            </a>
-            @endforeach
-        </div>
-    </nav>
-    @endif
-
     {{-- CONTENT --}}
-    <main class="max-w-2xl mx-auto px-4 py-5 sm:pb-6 {{ (session('mahasiswa_id') && !View::hasSection('hide-bottom-nav')) ? 'pb-24' : 'pb-6' }}">
+    <main class="max-w-2xl mx-auto px-4 py-5 pb-6">
 
         @if(session('success'))
         <div x-data="{show:true}" x-show="show"
