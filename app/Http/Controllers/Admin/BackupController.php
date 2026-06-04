@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BackupController extends Controller
@@ -50,8 +51,18 @@ class BackupController extends Controller
         }
 
         try {
+            // Simpan info admin yang sedang login sebelum restore
+            $adminId    = Auth::id();
+            $adminEmail = Auth::user()->email ?? null;
+
             DB::unprepared($content);
-            return back()->with('success', 'Database berhasil dipulihkan dari file backup.');
+
+            // Setelah restore, session mungkin tidak valid — login ulang otomatis
+            Auth::logout();
+            session()->flush();
+
+            return redirect()->route('login.admin')
+                ->with('success', 'Database berhasil dipulihkan. Silakan login kembali.');
         } catch (\Throwable $e) {
             return back()->with('error', 'Gagal memulihkan database: ' . $e->getMessage());
         }

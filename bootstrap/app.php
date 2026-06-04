@@ -14,6 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'auth.mahasiswa' => \App\Http\Middleware\AuthMahasiswa::class,
         ]);
+        $middleware->redirectGuestsTo(fn() => route('login.admin'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //
