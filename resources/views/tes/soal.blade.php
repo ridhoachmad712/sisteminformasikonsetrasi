@@ -219,7 +219,7 @@ input[type=radio]:checked + .likert-label {
                         Periksa Lagi
                     </button>
                     <button type="button" @click="confirmSubmit()"
-                        :disabled="answered < total || submitting"
+                        :disabled="submitting"
                         class="h-12 rounded-xl text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed"
                         style="background:{{ $iconColor }}">
                         <template x-if="!submitting">
@@ -292,7 +292,7 @@ function tesData() {
             });
         },
         confirmSubmit() {
-            if (this.answered < this.total || this.submitting) return;
+            if (this.submitting) return;
             this.submitting = true;
             this.saveDraft(true);
             const form = document.getElementById('form-tes');

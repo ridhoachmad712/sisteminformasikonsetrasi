@@ -74,7 +74,8 @@ class TesController extends Controller
         if ($jadwal->belum_mulai) {
             return "{$label} belum dimulai.";
         }
-        if ($jadwal->sudah_berakhir) {
+        // Beri grace period 5 menit untuk submit yang dipicu timer client-side
+        if ($jadwal->tanggal_selesai->addMinutes(5)->isPast()) {
             return "Waktu {$label} telah berakhir. Jawaban tidak dapat dikirim.";
         }
         return null;
@@ -160,10 +161,7 @@ class TesController extends Controller
             return redirect()->route('tes.index')->with('error', $pesan);
         }
 
-        $hasil = $this->prosesSubmit($mahasiswa, $request, 'minat');
-        if ($hasil === false) {
-            return back()->withErrors(['jawaban' => 'Harap jawab semua pertanyaan.'])->withInput();
-        }
+        $this->prosesSubmit($mahasiswa, $request, 'minat');
 
         return redirect()->route('tes.index')->with('success', 'Tes Minat berhasil diselesaikan!');
     }
@@ -209,10 +207,7 @@ class TesController extends Controller
             return redirect()->route('tes.index')->with('error', $pesan);
         }
 
-        $hasil = $this->prosesSubmit($mahasiswa, $request, 'bakat');
-        if ($hasil === false) {
-            return back()->withErrors(['jawaban' => 'Harap jawab semua pertanyaan.'])->withInput();
-        }
+        $this->prosesSubmit($mahasiswa, $request, 'bakat');
 
         return redirect()->route('tes.index')->with('success', 'Tes Bakat berhasil diselesaikan!');
     }
@@ -320,12 +315,34 @@ class TesController extends Controller
         return [$soal, $draft];
     }
 
-    private function prosesSubmit(Mahasiswa $mahasiswa, Request $request, string $jenis): bool|HasilTes
+    /**
+     * Auto-submit untuk mahasiswa yang waktunya habis tapi belum submit.
+     * Dipanggil dari Artisan command AutoSubmitExpiredTests.
+     */
+    public static function autoSubmitMahasiswa(Mahasiswa $mahasiswa, string $jenis): void
+    {
+        $sudahKey = "sudah_tes_{$jenis}";
+        if ($mahasiswa->$sudahKey) return;
+
+        $draftKey = "draft_{$jenis}";
+        $draft    = $mahasiswa->$draftKey ?? [];
+
+        // Buat fake request dari draft yang tersimpan
+        $fakeRequest = new \Illuminate\Http\Request();
+        $fakeRequest->merge(['jawaban' => $draft]);
+
+        (new self())->prosesSubmitDenganJawaban($mahasiswa, $draft, $jenis);
+    }
+
+    private function prosesSubmit(Mahasiswa $mahasiswa, Request $request, string $jenis): HasilTes
     {
         $jawaban  = $request->input('jawaban', []);
-        $soalList = self::getCachedSoal($jenis)->keyBy('id');
+        return $this->prosesSubmitDenganJawaban($mahasiswa, $jawaban, $jenis);
+    }
 
-        if (count($jawaban) < $soalList->count()) return false;
+    private function prosesSubmitDenganJawaban(Mahasiswa $mahasiswa, array $jawaban, string $jenis): HasilTes
+    {
+        $soalList = self::getCachedSoal($jenis)->keyBy('id');
 
         // Akumulasi skor per konsentrasi
         $skor = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
