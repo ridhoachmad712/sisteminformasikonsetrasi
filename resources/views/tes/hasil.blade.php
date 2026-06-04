@@ -44,23 +44,6 @@ arsort($allScores);
 
 <div class="space-y-4">
 
-    {{-- Disclaimer — pindah ke atas --}}
-    <div class="rounded-2xl border border-warning-200 dark:border-warning-900 bg-warning-50 dark:bg-warning-900/20 p-4">
-        <div class="flex items-start gap-3">
-            <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-warning-100 dark:bg-warning-500/20 shrink-0 mt-0.5">
-                <svg class="w-5 h-5 text-warning-600 dark:text-warning-400" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <div>
-                <h4 class="font-semibold text-warning-800 dark:text-warning-300 text-sm mb-1">Rekomendasi Belum Bersifat Final</h4>
-                <p class="text-xs text-warning-700 dark:text-warning-400/90 leading-relaxed">
-                    Hasil ini disusun hanya berdasarkan tes minat dan bakat. Penentuan konsentrasi akhir masih perlu meninjau aspek lain seperti
-                    <strong>Pilihan Konsentrasi, Nilai Mata Kuliah, Rekomendasi Penasehat Akademik, Prestasi Pendukung dan IPK</strong>.
-                    Hasil akhir konsentrasi akan disampaikan nanti.
-                </p>
-            </div>
-        </div>
-    </div>
-
     {{-- Hero Card --}}
     <div class="relative overflow-hidden rounded-2xl bg-gray-900 dark:bg-gray-800 p-6 text-center">
         <div class="relative z-10">
@@ -78,6 +61,23 @@ arsort($allScores);
         {{-- Decorative circles --}}
         <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full bg-white/5"></div>
         <div class="absolute -bottom-10 -left-10 w-32 h-32 rounded-full bg-white/5"></div>
+    </div>
+
+    {{-- Disclaimer --}}
+    <div class="rounded-2xl border border-warning-200 dark:border-warning-900 bg-warning-50 dark:bg-warning-900/20 p-4">
+        <div class="flex items-start gap-3">
+            <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-warning-100 dark:bg-warning-500/20 shrink-0 mt-0.5">
+                <svg class="w-5 h-5 text-warning-600 dark:text-warning-400" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+                <h4 class="font-semibold text-warning-800 dark:text-warning-300 text-sm mb-1">Rekomendasi Belum Bersifat Final</h4>
+                <p class="text-xs text-warning-700 dark:text-warning-400/90 leading-relaxed">
+                    Hasil ini disusun hanya berdasarkan tes minat dan bakat. Penentuan konsentrasi akhir masih perlu meninjau aspek lain seperti
+                    <strong>Pilihan Konsentrasi, Nilai Mata Kuliah, Rekomendasi Penasehat Akademik, Prestasi Pendukung dan IPK</strong>.
+                    Hasil akhir konsentrasi akan disampaikan setelah semua aspek dihitung.
+                </p>
+            </div>
+        </div>
     </div>
 
     {{-- Score Bars --}}
