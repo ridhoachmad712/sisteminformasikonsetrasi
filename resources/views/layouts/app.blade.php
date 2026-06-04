@@ -87,7 +87,7 @@
     </header>
 
     {{-- CONTENT --}}
-    <main class="max-w-2xl mx-auto px-4 py-5 pb-6" style="margin-top: calc(3.5rem + env(safe-area-inset-top))">
+    <main class="max-w-2xl mx-auto px-4 py-5 pb-16" style="margin-top: calc(3.5rem + env(safe-area-inset-top))">
 
         @if(session('success'))
         <div x-data="{show:true}" x-show="show"
@@ -113,6 +113,18 @@
 
         @yield('content')
     </main>
+
+    {{-- Sticky Footer --}}
+    <div class="fixed bottom-0 left-0 right-0 z-[9998] py-2 text-center bg-gray-50 dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800"
+        style="padding-bottom: calc(0.5rem + env(safe-area-inset-bottom))">
+        <p class="text-xs text-gray-400">
+            This App developed by
+            <a href="https://www.instagram.com/ridhoachmad_/" target="_blank" rel="noopener noreferrer"
+                class="font-medium text-brand-500 hover:text-brand-600 transition-colors">
+                @ridhoachmad_
+            </a>
+        </p>
+    </div>
 
     @stack('scripts')
 </body>
