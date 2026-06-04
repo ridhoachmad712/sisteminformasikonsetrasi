@@ -103,14 +103,14 @@
         <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden">
             <div class="divide-y divide-gray-50 dark:divide-gray-800/50">
                 @foreach($mataKuliah as $key => $namaMk)
-                <div class="px-5 py-3.5">
-                    <label for="nilai_{{ $key }}" class="block text-sm text-gray-700 dark:text-gray-300 mb-2">
+                <div class="flex items-center justify-between gap-4 px-5 py-3.5">
+                    <label for="nilai_{{ $key }}" class="text-sm text-gray-700 dark:text-gray-300 flex-1">
                         <span class="text-gray-400 mr-1.5">{{ $loop->iteration }}.</span>{{ $namaMk }}
                     </label>
                     <select name="nilai[{{ $key }}]" id="nilai_{{ $key }}" required
                         x-model="nilai['{{ $key }}']"
-                        class="w-full h-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-3 text-sm font-semibold text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-none dark:bg-gray-900">
-                        <option value="">— Pilih Nilai —</option>
+                        class="shrink-0 w-28 h-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-3 text-sm font-semibold text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-none dark:bg-gray-900">
+                        <option value="">—</option>
                         @foreach($pilihan as $p)
                         <option value="{{ $p }}" @selected(old("nilai.$key", $nilai[$key] ?? '') === $p)>{{ $p }}</option>
                         @endforeach
