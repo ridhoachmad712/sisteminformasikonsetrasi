@@ -104,6 +104,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::get('rekap', [\App\Http\Controllers\Admin\RekapController::class, 'index'])->name('rekap.index');
     Route::get('rekap/{mahasiswum}', [\App\Http\Controllers\Admin\RekapController::class, 'show'])->name('rekap.show');
 
+    // Backup Database
+    Route::get('backup', [\App\Http\Controllers\Admin\BackupController::class, 'index'])->name('backup.index');
+    Route::get('backup/download', [\App\Http\Controllers\Admin\BackupController::class, 'download'])->name('backup.download');
+    Route::post('backup/upload', [\App\Http\Controllers\Admin\BackupController::class, 'upload'])->name('backup.upload');
+
     // Monitor Live Tes
     Route::get('monitor', [\App\Http\Controllers\Admin\MonitorController::class, 'index'])->name('monitor.index');
     Route::get('monitor/data', [\App\Http\Controllers\Admin\MonitorController::class, 'data'])->name('monitor.data');

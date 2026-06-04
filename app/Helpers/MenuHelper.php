@@ -40,7 +40,8 @@ class MenuHelper
             [
                 'title' => 'Pengaturan',
                 'items' => [
-                    ['icon' => 'shield', 'name' => 'User Admin', 'path' => '/admin/users'],
+                    ['icon' => 'shield',  'name' => 'User Admin',      'path' => '/admin/users'],
+                    ['icon' => 'backup',  'name' => 'Backup Database',  'path' => '/admin/backup'],
                 ],
             ],
         ];
@@ -71,6 +72,8 @@ class MenuHelper
             'live' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M5.636 5.636a9 9 0 000 12.728M18.364 18.364a9 9 0 000-12.728M8.464 8.464a5 5 0 000 7.072M15.536 15.536a5 5 0 000-7.072" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
 
             'dosen' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+
+            'backup' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
         ];
 
         return $icons[$iconName] ?? '<svg class="size-6" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>';
