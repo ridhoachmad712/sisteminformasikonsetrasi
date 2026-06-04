@@ -45,17 +45,19 @@
         @endphp
 
         @foreach($ranks as $r)
-        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4 flex items-center gap-4">
-            <div class="flex items-center justify-center w-10 h-10 rounded-xl text-white font-bold shrink-0" style="background:{{ $r['badge'] }}">
-                {{ $r['no'] }}
-            </div>
-            <div class="flex-1 min-w-0">
-                <p class="text-sm font-semibold text-gray-800 dark:text-gray-200">{{ $r['label'] }}</p>
-                <p class="text-xs text-gray-400">{{ $r['desc'] }}</p>
+        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
+            <div class="flex items-center gap-3 mb-3">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl text-white font-bold shrink-0" style="background:{{ $r['badge'] }}">
+                    {{ $r['no'] }}
+                </div>
+                <div>
+                    <p class="text-sm font-semibold text-gray-800 dark:text-gray-200">{{ $r['label'] }}</p>
+                    <p class="text-xs text-gray-400">{{ $r['desc'] }}</p>
+                </div>
             </div>
             <select name="{{ $r['name'] }}" x-model="{{ $r['model'] }}" required
-                class="shrink-0 w-40 sm:w-52 h-11 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-3 text-sm font-medium text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-none dark:bg-gray-900">
-                <option value="">— Pilih —</option>
+                class="w-full h-11 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-3 text-sm font-medium text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-none dark:bg-gray-900">
+                <option value="">— Pilih Konsentrasi —</option>
                 @foreach($konsentrasi as $key => $label)
                 <option value="{{ $key }}"
                     x-bind:disabled="
