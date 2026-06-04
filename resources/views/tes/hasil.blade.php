@@ -53,8 +53,7 @@ arsort($allScores);
             <div>
                 <h4 class="font-semibold text-warning-800 dark:text-warning-300 text-sm mb-1">Rekomendasi Belum Bersifat Final</h4>
                 <p class="text-xs text-warning-700 dark:text-warning-400/90 leading-relaxed">
-                    Rekomendasi Konsentrasi belum bersifat final. Hasil ini disusun hanya berdasarkan tes minat dan bakat.
-                    Penentuan konsentrasi akhir masih perlu meninjau aspek lain seperti
+                    Hasil ini disusun hanya berdasarkan tes minat dan bakat. Penentuan konsentrasi akhir masih perlu meninjau aspek lain seperti
                     <strong>Pilihan Konsentrasi, Nilai Mata Kuliah, Rekomendasi Penasehat Akademik, Prestasi Pendukung dan IPK</strong>.
                     Hasil akhir konsentrasi akan disampaikan nanti.
                 </p>
