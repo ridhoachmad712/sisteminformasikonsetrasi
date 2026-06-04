@@ -161,15 +161,12 @@ arsort($allScores);
         </div>
     </div>
 
-    {{-- Logout --}}
+    {{-- Kembali ke Beranda --}}
     <div class="text-center pb-6">
-        <form action="{{ route('logout.mahasiswa') }}" method="POST" class="inline">
-            @csrf
-            <button type="submit" class="inline-flex items-center gap-2 rounded-xl border border-gray-300 dark:border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M15 3H7C5.895 3 5 3.895 5 5v14c0 1.105.895 2 2 2h8M19 12H9M16 9l3 3-3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                Keluar
-            </button>
-        </form>
+        <a href="{{ route('beranda') }}" class="inline-flex items-center gap-2 rounded-xl border border-gray-300 dark:border-gray-700 px-5 py-2.5 text-sm font-medium text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M12 5l-7 7 7 7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Kembali ke Beranda
+        </a>
     </div>
 </div>
 @endsection
