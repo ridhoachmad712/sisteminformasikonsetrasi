@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="h-full">
 <head>
     <meta charset="UTF-8">
@@ -8,14 +8,14 @@
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.store('theme', {
-                init() { const t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'); this.theme = t; this.updateTheme(); },
+                init() { const t = localStorage.getItem('theme') || 'light'; this.theme = t; this.updateTheme(); },
                 theme: 'light',
                 toggle() { this.theme = this.theme === 'light' ? 'dark' : 'light'; localStorage.setItem('theme', this.theme); this.updateTheme(); },
                 updateTheme() { if (this.theme === 'dark') { document.documentElement.classList.add('dark'); document.body.classList.add('dark','bg-gray-900'); } else { document.documentElement.classList.remove('dark'); document.body.classList.remove('dark','bg-gray-900'); } }
             });
         });
     </script>
-    <script>(function(){const t=localStorage.getItem('theme')||(window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');if(t==='dark'){document.documentElement.classList.add('dark');document.body.classList.add('dark','bg-gray-900');}})();</script>
+    <script>(function(){const t=localStorage.getItem('theme')||'light';if(t==='dark'){document.documentElement.classList.add('dark');document.body.classList.add('dark','bg-gray-900');}})();</script>
 </head>
 <body x-data class="bg-gray-50 dark:bg-gray-900 min-h-screen flex items-center justify-center p-4">
 

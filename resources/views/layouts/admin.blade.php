@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="id" class="h-full">
 <head>
     <meta charset="UTF-8">
@@ -13,9 +13,7 @@
         document.addEventListener('alpine:init', () => {
             Alpine.store('theme', {
                 init() {
-                    const saved = localStorage.getItem('theme');
-                    const sys = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                    this.theme = saved || sys;
+                    this.theme = localStorage.getItem('theme') || 'light';
                     this.updateTheme();
                 },
                 theme: 'light',
@@ -48,7 +46,7 @@
     </script>
     <script>
         (function() {
-            const t = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+            const t = localStorage.getItem('theme') || 'light';
             if (t === 'dark') { document.documentElement.classList.add('dark'); document.body.classList.add('dark','bg-gray-900'); }
         })();
     </script>
