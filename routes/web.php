@@ -99,4 +99,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Rekap Konsentrasi
     Route::get('rekap', [\App\Http\Controllers\Admin\RekapController::class, 'index'])->name('rekap.index');
     Route::get('rekap/{mahasiswum}', [\App\Http\Controllers\Admin\RekapController::class, 'show'])->name('rekap.show');
+
+    // Monitor Live Tes
+    Route::get('monitor', [\App\Http\Controllers\Admin\MonitorController::class, 'index'])->name('monitor.index');
+    Route::get('monitor/data', [\App\Http\Controllers\Admin\MonitorController::class, 'data'])->name('monitor.data');
 });

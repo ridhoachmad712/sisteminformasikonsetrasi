@@ -16,6 +16,7 @@ class Mahasiswa extends Model
         'draft_minat', 'draft_bakat', 'urutan_minat', 'urutan_bakat',
         'nilai_matkul', 'sudah_input_nilai', 'ipk',
         'pilihan_konsentrasi', 'sudah_pilih_konsentrasi',
+        'last_activity_at', 'tes_aktif',
     ];
 
     protected $casts = [
@@ -32,6 +33,7 @@ class Mahasiswa extends Model
         'sudah_input_nilai'        => 'boolean',
         'pilihan_konsentrasi'      => 'array',
         'sudah_pilih_konsentrasi'  => 'boolean',
+        'last_activity_at'         => 'datetime',
     ];
 
     /** Label konsentrasi */

@@ -215,7 +215,11 @@ class TesController extends Controller
         );
 
         $draftKey = "draft_{$jenis}";
-        $mahasiswa->update([$draftKey => $cleaned]);
+        $mahasiswa->update([
+            $draftKey          => $cleaned,
+            'last_activity_at' => now(),
+            'tes_aktif'        => $jenis,
+        ]);
 
         return response()->json(['ok' => true, 'saved' => count($cleaned), 'jenis' => $jenis]);
     }
@@ -279,6 +283,12 @@ class TesController extends Controller
             $draft = [];
         }
 
+        // Track aktivitas: tandai mahasiswa sedang mengerjakan tes ini
+        $mahasiswa->update([
+            'last_activity_at' => now(),
+            'tes_aktif'        => $jenis,
+        ]);
+
         return [$soal, $draft];
     }
 
@@ -336,9 +346,11 @@ class TesController extends Controller
         $draftKey  = "draft_{$jenis}";
         $sudahKey  = "sudah_tes_{$jenis}";
         $mahasiswa->update([
-            $sudahKey  => true,
-            $urutanKey => null,
-            $draftKey  => null,
+            $sudahKey          => true,
+            $urutanKey         => null,
+            $draftKey          => null,
+            'tes_aktif'        => null,
+            'last_activity_at' => now(),
         ]);
 
         // Jika kedua tes selesai: hitung nilai akhir

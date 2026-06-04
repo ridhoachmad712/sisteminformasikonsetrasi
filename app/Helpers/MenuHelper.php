@@ -19,8 +19,9 @@ class MenuHelper
             [
                 'title' => 'Manajemen Tes',
                 'items' => [
-                    ['icon' => 'forms',    'name' => 'Kelola Soal', 'path' => '/admin/soal'],
-                    ['icon' => 'calendar', 'name' => 'Jadwal Tes',  'path' => '/admin/jadwal'],
+                    ['icon' => 'forms',    'name' => 'Kelola Soal',     'path' => '/admin/soal'],
+                    ['icon' => 'calendar', 'name' => 'Jadwal Tes',      'path' => '/admin/jadwal'],
+                    ['icon' => 'live',     'name' => 'Monitor Live',    'path' => '/admin/monitor'],
                 ],
             ],
 
@@ -65,6 +66,8 @@ class MenuHelper
             'shield' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2L4 5v6c0 5.5 3.5 10 8 11 4.5-1 8-5.5 8-11V5l-8-3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 
             'clipboard' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9h6m-6 4h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+
+            'live' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="12" cy="12" r="3" fill="currentColor"/><path d="M5.636 5.636a9 9 0 000 12.728M18.364 18.364a9 9 0 000-12.728M8.464 8.464a5 5 0 000 7.072M15.536 15.536a5 5 0 000-7.072" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
         ];
 
         return $icons[$iconName] ?? '<svg class="size-6" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>';
