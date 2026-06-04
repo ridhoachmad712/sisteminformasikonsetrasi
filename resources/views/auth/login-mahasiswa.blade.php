@@ -136,9 +136,11 @@
     <p class="text-center text-xs text-gray-400 mt-6">
         <a href="{{ route('login.admin') }}" class="hover:text-gray-600 dark:hover:text-gray-300">Login Admin</a>
         <span class="mx-2">·</span>
-        <button @click="$store.theme.toggle()" class="hover:text-gray-600 dark:hover:text-gray-300">
-            <span class="dark:hidden">🌙 Dark Mode</span>
-            <span class="hidden dark:inline">☀️ Light Mode</span>
+        <button @click="$store.theme.toggle()" class="inline-flex items-center gap-1.5 hover:text-gray-600 dark:hover:text-gray-300">
+            <svg class="dark:hidden w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><path d="M17.45 11.97l.73.19c.085-.323-.054-.663-.34-.834-.287-.172-.652-.133-.896.095l.506.549zm-9.42-9.42l.55.51c.227-.245.266-.611.094-.897-.172-.287-.512-.425-.834-.34l.19.727zM12.92 13C9.648 13 7 10.353 7 7.085H5.5c0 4.097 3.32 7.415 7.415 7.415V13zm3.956-2.579C15.83 12.397 14.47 13 12.92 13v1.5c1.95 0 3.727-.754 5.051-1.981L16.876 10.42zm-.146.359c-.786 2.982-3.501 5.18-6.73 5.18v1.5c3.925 0 7.224-2.673 8.18-6.3l-1.45-.38zM10 18C6.157 18 3.042 14.843 3.042 11H1.542C1.542 15.671 5.33 19.5 10 19.5V18zm-6.958-7C3.042 7.772 5.24 5.056 8.222 4.271L7.84 2.82C4.215 3.776 1.542 7.075 1.542 11H3.042zm4-3.915C7 5.529 7.597 4.113 8.58 3.056L7.481 2.035C6.25 3.359 5.5 5.135 5.5 7.085H7z" fill="currentColor"/></svg>
+            <svg class="hidden dark:block w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><circle cx="10" cy="10" r="3.5" fill="currentColor"/><path d="M10 1.5v2M10 16.5v2M1.5 10h2M16.5 10h2M4.1 4.1l1.4 1.4M14.5 14.5l1.4 1.4M14.5 5.5l1.4-1.4M4.1 15.9l1.4-1.4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span class="dark:hidden">Dark Mode</span>
+            <span class="hidden dark:inline">Light Mode</span>
         </button>
     </p>
 

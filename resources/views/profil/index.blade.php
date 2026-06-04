@@ -1,6 +1,13 @@
 @extends('layouts.app')
 @section('title', 'Profil Saya')
 
+@push('styles')
+<style>
+@keyframes barFill { from { width: 0 } }
+.bar-animate { animation: barFill 1s ease-out forwards; }
+</style>
+@endpush
+
 @section('content')
 <div class="space-y-4">
 
@@ -55,7 +62,7 @@
                     <span class="font-bold" style="color:{{ $c }}">{{ number_format($val,2) }}</span>
                 </div>
                 <div class="w-full bg-gray-100 dark:bg-gray-800 rounded-full h-2 overflow-hidden">
-                    <div class="h-2 rounded-full" style="width:{{ $val }}%; background:{{ $c }}"></div>
+                    <div class="h-2 rounded-full bar-animate" style="width:{{ $val }}%; background:{{ $c }}; animation-delay:{{ $loop->index * 150 }}ms"></div>
                 </div>
             </div>
             @endforeach

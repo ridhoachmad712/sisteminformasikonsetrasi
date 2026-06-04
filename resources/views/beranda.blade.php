@@ -79,11 +79,11 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
     @endif
 
     {{-- ── Menu utama ─────────────────────────────────────────── --}}
-    <div class="grid grid-cols-1 gap-3">
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
 
         {{-- Kartu Pilihan Konsentrasi --}}
         <a href="{{ route('pilihan.index') }}"
-            class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
+            class="group sm:col-span-2 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-500/10 shrink-0">
                     <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M7 12h10M10 18h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>

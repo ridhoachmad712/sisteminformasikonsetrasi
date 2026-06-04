@@ -65,11 +65,11 @@
         <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 mb-6"
             x-data="countdown('{{ $jadwal->tanggal_mulai->toISOString() }}')" x-init="start()">
             <p class="text-xs text-gray-400 mb-4 uppercase tracking-wider font-medium">Menghitung Mundur</p>
-            <div class="grid grid-cols-4 gap-3">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 @foreach([['hari', 'Hari'], ['jam', 'Jam'], ['menit', 'Menit'], ['detik', 'Detik']] as [$var, $label])
-                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-3">
+                <div class="rounded-xl bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 p-4">
                     <div class="text-3xl font-bold text-gray-900 dark:text-white tabular-nums" x-text="{{ $var }}">--</div>
-                    <div class="text-xs text-gray-400 mt-1">{{ $label }}</div>
+                    <div class="text-xs text-gray-400 mt-1.5">{{ $label }}</div>
                 </div>
                 @endforeach
             </div>
