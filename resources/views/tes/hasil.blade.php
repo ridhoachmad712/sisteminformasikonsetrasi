@@ -44,6 +44,24 @@ arsort($allScores);
 
 <div class="space-y-4">
 
+    {{-- Disclaimer — pindah ke atas --}}
+    <div class="rounded-2xl border border-warning-200 dark:border-warning-900 bg-warning-50 dark:bg-warning-900/20 p-4">
+        <div class="flex items-start gap-3">
+            <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-warning-100 dark:bg-warning-500/20 shrink-0 mt-0.5">
+                <svg class="w-5 h-5 text-warning-600 dark:text-warning-400" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <div>
+                <h4 class="font-semibold text-warning-800 dark:text-warning-300 text-sm mb-1">Rekomendasi Belum Bersifat Final</h4>
+                <p class="text-xs text-warning-700 dark:text-warning-400/90 leading-relaxed">
+                    Rekomendasi Konsentrasi belum bersifat final. Hasil ini disusun hanya berdasarkan tes minat dan bakat.
+                    Penentuan konsentrasi akhir masih perlu meninjau aspek lain seperti
+                    <strong>Pilihan Konsentrasi, Nilai Mata Kuliah, Rekomendasi Penasehat Akademik, Prestasi Pendukung dan IPK</strong>.
+                    Hasil akhir konsentrasi akan disampaikan nanti.
+                </p>
+            </div>
+        </div>
+    </div>
+
     {{-- Hero Card --}}
     <div class="relative overflow-hidden rounded-2xl bg-gray-900 dark:bg-gray-800 p-6 text-center">
         <div class="relative z-10">
@@ -106,8 +124,8 @@ arsort($allScores);
             <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M3.25 5.5C3.25 4.26 4.26 3.25 5.5 3.25h13c1.24 0 2.25 1.01 2.25 2.25v13c0 1.24-1.01 2.25-2.25 2.25h-13C4.26 20.75 3.25 19.74 3.25 18.5v-13zm2.25-1.25a.75.75 0 00-.75.75v3.08h13.5V5c0-.41-.34-.75-.75-.75H5.5zm-1.25 5.33v3.84h3.83v-3.84H4.25zm5.33 0v3.84h3.84v-3.84h-3.84zm5.34 0v3.84h3.83v-3.84h-3.83zM4.75 18.5v-3.08H8.58v4h-3.08a.75.75 0 01-.75-.92zm5.33.92v-4H13.9v4h-3.84zm5.34 0v-4h3.83v3.08a.75.75 0 01-.75.92h-3.08z" fill="currentColor"/></svg>
             Rincian Skor
         </h3>
-        <div class="overflow-hidden rounded-xl border border-gray-200 dark:border-gray-800">
-            <table class="w-full text-sm">
+        <div class="overflow-x-auto rounded-xl border border-gray-200 dark:border-gray-800">
+            <table class="w-full text-sm min-w-[400px]">
                 <thead>
                     <tr class="border-b border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-800/50">
                         <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Konsentrasi</th>
@@ -178,24 +196,6 @@ arsort($allScores);
         </div>
     </div>
     @endif
-
-    {{-- Disclaimer --}}
-    <div class="rounded-2xl border border-warning-200 dark:border-warning-900 bg-warning-50 dark:bg-warning-900/20 p-4 sm:p-5">
-        <div class="flex items-start gap-3">
-            <div class="flex items-center justify-center w-9 h-9 rounded-xl bg-warning-100 dark:bg-warning-500/20 shrink-0">
-                <svg class="w-5 h-5 text-warning-600 dark:text-warning-400" viewBox="0 0 24 24" fill="none"><path d="M12 9v4m0 4h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <div>
-                <h4 class="font-semibold text-warning-800 dark:text-warning-300 text-sm mb-1">Rekomendasi Belum Bersifat Final</h4>
-                <p class="text-xs text-warning-700 dark:text-warning-400/90 leading-relaxed">
-                    Hasil ini disusun <strong>hanya berdasarkan tes minat dan bakat</strong>. Penentuan konsentrasi akhir
-                    masih perlu meninjau aspek lain seperti <strong>nilai akademik, kapasitas kelas, serta kebijakan
-                    Program Studi</strong>. Gunakan rekomendasi ini sebagai bahan pertimbangan, dan konsultasikan dengan
-                    dosen Penasihat Akademik atau pihak Prodi sebelum mengambil keputusan.
-                </p>
-            </div>
-        </div>
-    </div>
 
     {{-- Logout --}}
     <div class="text-center pb-6">
