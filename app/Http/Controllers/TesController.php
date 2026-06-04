@@ -9,6 +9,7 @@ use App\Models\HasilTes;
 use App\Models\DetailJawaban;
 use App\Models\JadwalTes;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 
 class TesController extends Controller
 {
@@ -27,12 +28,15 @@ class TesController extends Controller
     private function validasiSoalCukup(string $jenis): bool
     {
         $min = $jenis === 'minat' ? self::MIN_SOAL_MINAT : self::MIN_SOAL_BAKAT;
-        foreach (['pemasaran', 'keuangan', 'sdm'] as $k) {
-            if (Soal::where('aktif', true)->where('jenis', $jenis)->where('konsentrasi', $k)->count() < $min) {
-                return false;
+
+        return Cache::remember("validasi_soal_{$jenis}", 600, function () use ($jenis, $min) {
+            foreach (['pemasaran', 'keuangan', 'sdm'] as $k) {
+                if (Soal::where('aktif', true)->where('jenis', $jenis)->where('konsentrasi', $k)->count() < $min) {
+                    return false;
+                }
             }
-        }
-        return true;
+            return true;
+        });
     }
 
     /**
@@ -80,6 +84,17 @@ class TesController extends Controller
     //  Landing — status kedua tes
     // ─────────────────────────────────────────────────────────────
 
+    private function cekPrasyarat(Mahasiswa $mahasiswa): ?string
+    {
+        if (!$mahasiswa->sudah_input_nilai) {
+            return 'Anda harus menyelesaikan input data Akademik sebelum mengikuti tes.';
+        }
+        if (!$mahasiswa->sudah_pilih_konsentrasi) {
+            return 'Anda harus memilih Pilihan Konsentrasi sebelum mengikuti tes.';
+        }
+        return null;
+    }
+
     public function index()
     {
         $mahasiswa = $this->getMahasiswa();
@@ -90,6 +105,11 @@ class TesController extends Controller
             if ($hasil && $hasil->lengkap) {
                 return view('tes.hasil', compact('mahasiswa', 'hasil'));
             }
+        }
+
+        // Cek prasyarat
+        if ($pesan = $this->cekPrasyarat($mahasiswa)) {
+            return redirect()->route('beranda')->with('error', $pesan);
         }
 
         // Cek jadwal untuk masing-masing jenis
@@ -109,6 +129,10 @@ class TesController extends Controller
 
         if ($mahasiswa->sudah_tes_minat) {
             return redirect()->route('tes.index')->with('info', 'Tes Minat sudah Anda selesaikan.');
+        }
+
+        if ($pesan = $this->cekPrasyarat($mahasiswa)) {
+            return redirect()->route('beranda')->with('error', $pesan);
         }
 
         $blokir = $this->cekJadwal($mahasiswa, 'minat');
@@ -154,6 +178,10 @@ class TesController extends Controller
 
         if ($mahasiswa->sudah_tes_bakat) {
             return redirect()->route('tes.index')->with('info', 'Tes Bakat sudah Anda selesaikan.');
+        }
+
+        if ($pesan = $this->cekPrasyarat($mahasiswa)) {
+            return redirect()->route('beranda')->with('error', $pesan);
         }
 
         $blokir = $this->cekJadwal($mahasiswa, 'bakat');
@@ -295,72 +323,79 @@ class TesController extends Controller
     private function prosesSubmit(Mahasiswa $mahasiswa, Request $request, string $jenis): bool|HasilTes
     {
         $jawaban  = $request->input('jawaban', []);
-        $soalList = self::getCachedSoal($jenis)->keyBy('id'); // pakai cache
+        $soalList = self::getCachedSoal($jenis)->keyBy('id');
 
         if (count($jawaban) < $soalList->count()) return false;
 
         // Akumulasi skor per konsentrasi
-        $skor  = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
-        $count = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
+        $skor = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
 
         foreach ($jawaban as $soalId => $nilai) {
             $soal = $soalList->get($soalId);
             if (!$soal) continue;
             $nilai = (int) $nilai;
             if ($nilai < 1 || $nilai > 5) continue;
-            $skor[$soal->konsentrasi]  += $nilai;
-            $count[$soal->konsentrasi]++;
+            $skor[$soal->konsentrasi] += $nilai;
         }
 
-        // Cari atau buat HasilTes untuk mahasiswa ini
-        $hasil = HasilTes::firstOrCreate(
-            ['mahasiswa_id' => $mahasiswa->id],
-            [
-                'nilai_pemasaran' => 0, 'nilai_keuangan' => 0, 'nilai_sdm' => 0,
-                'rekomendasi' => 'pemasaran',
-                'sudah_minat' => false, 'sudah_bakat' => false, 'lengkap' => false,
-            ]
-        );
+        return DB::transaction(function () use ($mahasiswa, $jawaban, $soalList, $skor, $jenis) {
+            // Cari atau buat HasilTes untuk mahasiswa ini
+            $hasil = HasilTes::firstOrCreate(
+                ['mahasiswa_id' => $mahasiswa->id],
+                [
+                    'nilai_pemasaran' => 0, 'nilai_keuangan' => 0, 'nilai_sdm' => 0,
+                    'rekomendasi' => 'pemasaran',
+                    'sudah_minat' => false, 'sudah_bakat' => false, 'lengkap' => false,
+                ]
+            );
 
-        // Update skor untuk jenis ini
-        $prefix = "skor_{$jenis}_";
-        $hasil->update([
-            "{$prefix}pemasaran" => $skor['pemasaran'],
-            "{$prefix}keuangan"  => $skor['keuangan'],
-            "{$prefix}sdm"       => $skor['sdm'],
-            "sudah_{$jenis}"     => true,
-        ]);
-
-        // Simpan detail jawaban
-        foreach ($jawaban as $soalId => $nilai) {
-            if (!$soalList->has($soalId)) continue;
-            DetailJawaban::create([
-                'hasil_tes_id' => $hasil->id,
-                'soal_id'      => $soalId,
-                'nilai'        => (int) $nilai,
+            // Update skor untuk jenis ini
+            $prefix = "skor_{$jenis}_";
+            $hasil->update([
+                "{$prefix}pemasaran" => $skor['pemasaran'],
+                "{$prefix}keuangan"  => $skor['keuangan'],
+                "{$prefix}sdm"       => $skor['sdm'],
+                "sudah_{$jenis}"     => true,
             ]);
-        }
 
-        // Update status mahasiswa
-        $urutanKey = "urutan_{$jenis}";
-        $draftKey  = "draft_{$jenis}";
-        $sudahKey  = "sudah_tes_{$jenis}";
-        $mahasiswa->update([
-            $sudahKey          => true,
-            $urutanKey         => null,
-            $draftKey          => null,
-            'tes_aktif'        => null,
-            'last_activity_at' => now(),
-        ]);
+            // Batch insert detail jawaban — 1 query, bukan N query
+            $now  = now();
+            $rows = [];
+            foreach ($jawaban as $soalId => $nilai) {
+                if (!$soalList->has($soalId)) continue;
+                $rows[] = [
+                    'hasil_tes_id' => $hasil->id,
+                    'soal_id'      => $soalId,
+                    'nilai'        => (int) $nilai,
+                    'created_at'   => $now,
+                    'updated_at'   => $now,
+                ];
+            }
+            if (!empty($rows)) {
+                DetailJawaban::insert($rows);
+            }
 
-        // Jika kedua tes selesai: hitung nilai akhir
-        $mahasiswa->refresh();
-        if ($mahasiswa->sudah_tes_minat && $mahasiswa->sudah_tes_bakat) {
-            $hasil->refresh();
-            $hasil->hitungNilaiAkhir();
-            $mahasiswa->update(['sudah_tes' => true]);
-        }
+            // Update status mahasiswa
+            $urutanKey = "urutan_{$jenis}";
+            $draftKey  = "draft_{$jenis}";
+            $sudahKey  = "sudah_tes_{$jenis}";
+            $mahasiswa->update([
+                $sudahKey          => true,
+                $urutanKey         => null,
+                $draftKey          => null,
+                'tes_aktif'        => null,
+                'last_activity_at' => $now,
+            ]);
 
-        return $hasil;
+            // Jika kedua tes selesai: hitung nilai akhir
+            $mahasiswa->refresh();
+            if ($mahasiswa->sudah_tes_minat && $mahasiswa->sudah_tes_bakat) {
+                $hasil->refresh();
+                $hasil->hitungNilaiAkhir();
+                $mahasiswa->update(['sudah_tes' => true]);
+            }
+
+            return $hasil;
+        });
     }
 }

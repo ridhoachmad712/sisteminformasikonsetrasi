@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
+use App\Models\DosenPa;
 
 class NilaiController extends Controller
 {
@@ -25,7 +26,9 @@ class NilaiController extends Controller
             }
         }
 
-        return view('nilai.index', compact('mahasiswa', 'mataKuliah', 'pilihan', 'nilai'));
+        $dosenList = DosenPa::where('aktif', true)->orderBy('nama')->get();
+
+        return view('nilai.index', compact('mahasiswa', 'mataKuliah', 'pilihan', 'nilai', 'dosenList'));
     }
 
     public function store(Request $request)
@@ -41,7 +44,11 @@ class NilaiController extends Controller
         }
 
         // Aturan validasi: IPK + setiap mata kuliah wajib & harus salah satu nilai valid
-        $rules = ['ipk' => ['required', 'numeric', 'between:0,4']];
+        $rules = [
+            'ipk'         => ['required', 'numeric', 'between:0,4'],
+            'dosen_pa_id' => ['required', 'exists:dosen_pa,id'],
+            'pernyataan'  => ['accepted'],
+        ];
         foreach ($semuaKey as $key) {
             $rules["nilai.$key"] = ['required', 'in:' . implode(',', $pilihan)];
         }
@@ -51,6 +58,9 @@ class NilaiController extends Controller
             'ipk.between'      => 'IPK harus antara 0,00 sampai 4,00.',
             'nilai.*.required' => 'Semua nilai mata kuliah wajib diisi.',
             'nilai.*.in'       => 'Nilai tidak valid.',
+            'dosen_pa_id.required' => 'Dosen PA wajib dipilih.',
+            'dosen_pa_id.exists'   => 'Dosen PA tidak valid.',
+            'pernyataan.accepted'  => 'Anda harus menyetujui pernyataan integritas data.',
         ]);
 
         // Simpan hanya key yang dikenal
@@ -62,6 +72,7 @@ class NilaiController extends Controller
         $mahasiswa->update([
             'nilai_matkul'      => $bersih,
             'ipk'               => $request->input('ipk'),
+            'dosen_pa_id'       => $request->input('dosen_pa_id') ?: null,
             'sudah_input_nilai' => true,
         ]);
 

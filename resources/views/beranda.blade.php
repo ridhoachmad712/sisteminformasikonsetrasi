@@ -25,6 +25,7 @@ $statusBakat = match(true) {
 
 $done         = (int)$mahasiswa->sudah_tes_minat + (int)$mahasiswa->sudah_tes_bakat;
 $keduaSelesai = $mahasiswa->sudah_tes_minat && $mahasiswa->sudah_tes_bakat;
+$tesTerkunci  = !$mahasiswa->sudah_input_nilai || !$mahasiswa->sudah_pilih_konsentrasi;
 
 $jam  = (int)$now->format('H');
 $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' : ($jam < 19 ? 'Selamat sore' : 'Selamat malam'));
@@ -78,11 +79,11 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
     @endif
 
     {{-- ── Menu utama ─────────────────────────────────────────── --}}
-    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+    <div class="grid grid-cols-1 gap-3">
 
         {{-- Kartu Pilihan Konsentrasi --}}
         <a href="{{ route('pilihan.index') }}"
-            class="group sm:col-span-2 rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
+            class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
             <div class="flex items-center gap-4">
                 <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-500/10 shrink-0">
                     <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M7 12h10M10 18h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -110,7 +111,59 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
             </div>
         </a>
 
+        {{-- Kartu Nilai Mata Kuliah --}}
+        <a href="{{ route('nilai.index') }}"
+            class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-500/10">
+                    <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-7 .91 12 12 0 01-7-.91 12 12 0 01.84-4.42L12 14z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                </div>
+                <svg class="w-4 h-4 text-gray-300 dark:text-gray-700 group-hover:text-brand-400 transition-colors" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Akademik</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">Input IPK, Dosen Penasehat Akademik dan Mata Kuliah Pendukung Konsentrasi.</p>
+            <div class="mt-3">
+                @if($mahasiswa->sudah_input_nilai)
+                <span class="inline-flex items-center gap-1 rounded-full bg-success-100 dark:bg-success-500/20 px-2 py-0.5 text-xs font-medium text-success-600 dark:text-success-400">
+                    Sudah diisi ✓
+                </span>
+                @else
+                <span class="inline-flex items-center gap-1 rounded-full bg-warning-100 dark:bg-warning-500/20 px-2 py-0.5 text-xs font-medium text-warning-700 dark:text-warning-400">
+                    Belum diisi
+                </span>
+                @endif
+            </div>
+        </a>
+
         {{-- Kartu Tes --}}
+        @if($tesTerkunci)
+        <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50 p-5 opacity-60 cursor-not-allowed">
+            <div class="flex items-center justify-between mb-4">
+                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-gray-100 dark:bg-gray-800">
+                    <svg class="w-5 h-5 text-gray-400" viewBox="0 0 24 24" fill="none">
+                        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <svg class="w-4 h-4 text-gray-300 dark:text-gray-700" viewBox="0 0 24 24" fill="none"><path d="M12 17v-6M12 7h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="font-semibold text-gray-400 dark:text-gray-500 text-sm mb-1">Tes Konsentrasi</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">Kerjakan tes minat dan bakat untuk mendapatkan rekomendasi konsentrasi.</p>
+            <div class="mt-3 flex flex-col gap-1">
+                @if(!$mahasiswa->sudah_input_nilai)
+                <p class="text-xs text-warning-600 dark:text-warning-400 flex items-center gap-1">
+                    <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    Selesaikan input Akademik terlebih dahulu
+                </p>
+                @endif
+                @if(!$mahasiswa->sudah_pilih_konsentrasi)
+                <p class="text-xs text-warning-600 dark:text-warning-400 flex items-center gap-1">
+                    <svg class="w-3 h-3 shrink-0" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    Selesaikan Pilihan Konsentrasi terlebih dahulu
+                </p>
+                @endif
+            </div>
+        </div>
+        @else
         <a href="{{ route('tes.index') }}"
             class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
             <div class="flex items-center justify-between mb-4">
@@ -143,93 +196,10 @@ $sapa = $jam >= 5 && $jam < 12 ? 'Selamat pagi' : ($jam < 15 ? 'Selamat siang' :
                 @endforeach
             </div>
         </a>
-
-        {{-- Kartu Nilai Mata Kuliah --}}
-        <a href="{{ route('nilai.index') }}"
-            class="group rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-5 hover:border-brand-300 dark:hover:border-brand-800 hover:shadow-theme-sm transition-all">
-            <div class="flex items-center justify-between mb-4">
-                <div class="flex items-center justify-center w-10 h-10 rounded-xl bg-brand-50 dark:bg-brand-500/10">
-                    <svg class="w-5 h-5 text-brand-500" viewBox="0 0 24 24" fill="none"><path d="M12 14l9-5-9-5-9 5 9 5z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 14l6.16-3.42a12 12 0 01.84 4.42 12 12 0 01-7 .91 12 12 0 01-7-.91 12 12 0 01.84-4.42L12 14z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-                </div>
-                <svg class="w-4 h-4 text-gray-300 dark:text-gray-700 group-hover:text-brand-400 transition-colors" viewBox="0 0 24 24" fill="none"><path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </div>
-            <h3 class="font-semibold text-gray-900 dark:text-white text-sm mb-1">Nilai Akademik</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">Input IPK & 9 nilai mata kuliah pendukung konsentrasi.</p>
-            <div class="mt-3">
-                @if($mahasiswa->sudah_input_nilai)
-                <span class="inline-flex items-center gap-1 rounded-full bg-success-100 dark:bg-success-500/20 px-2 py-0.5 text-xs font-medium text-success-600 dark:text-success-400">
-                    Sudah diisi ✓
-                </span>
-                @else
-                <span class="inline-flex items-center gap-1 rounded-full bg-warning-100 dark:bg-warning-500/20 px-2 py-0.5 text-xs font-medium text-warning-700 dark:text-warning-400">
-                    Belum diisi
-                </span>
-                @endif
-            </div>
-        </a>
+        @endif
 
     </div>
 
-    {{-- ── Info jadwal (jika ada yang berlangsung/segera) ────── --}}
-    @php
-        $jadwalTampil = collect([$jadwalMinat, $jadwalBakat])
-            ->filter(fn($j) => $j && !$j->sudah_berakhir)
-            ->unique('id');
-    @endphp
-    @if($jadwalTampil->isNotEmpty())
-    <div class="rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 divide-y divide-gray-100 dark:divide-gray-800 overflow-hidden">
-        <div class="px-5 py-3">
-            <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide">Jadwal Tes</p>
-        </div>
-        @foreach($jadwalTampil as $j)
-        @php
-            $isBerlangsung = $j->sedang_berlangsung;
-            $jenisSudah    = ($j->jenis_tes === 'minat' && $mahasiswa->sudah_tes_minat)
-                          || ($j->jenis_tes === 'bakat' && $mahasiswa->sudah_tes_bakat);
-        @endphp
-        <div class="px-5 py-4 flex items-center gap-4">
-            <div class="w-2 h-2 rounded-full shrink-0 {{ $isBerlangsung ? 'bg-success-500 animate-pulse' : 'bg-gray-300 dark:bg-gray-700' }}"></div>
-            <div class="flex-1 min-w-0">
-                <p class="text-sm font-medium text-gray-800 dark:text-gray-200 truncate">{{ $j->nama }}</p>
-                <p class="text-xs text-gray-400 mt-0.5">
-                    {{ $j->tanggal_mulai->format('d M Y, H:i') }} — {{ $j->tanggal_selesai->format('d M Y, H:i') }} WITA
-                </p>
-            </div>
-            @if($jenisSudah)
-            <span class="shrink-0 text-xs font-medium text-success-600 dark:text-success-400 bg-success-50 dark:bg-success-500/10 rounded-full px-2.5 py-1">Selesai ✓</span>
-            @elseif($isBerlangsung)
-            <span class="shrink-0 text-xs font-medium text-brand-600 dark:text-brand-400 bg-brand-50 dark:bg-brand-500/10 rounded-full px-2.5 py-1 flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-brand-500 animate-pulse"></span>Berlangsung
-            </span>
-            @else
-            <span class="shrink-0 text-xs text-gray-400">Belum mulai</span>
-            @endif
-        </div>
-        @endforeach
-    </div>
-    @endif
-
-    {{-- ── Panduan singkat (hanya tampil jika belum mulai tes) ── --}}
-    @if($done === 0)
-    <div class="rounded-2xl border border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-900 p-5">
-        <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4">Cara mengikuti tes</p>
-        <div class="space-y-3">
-            @foreach([
-                ['1', 'Buka menu Tes Konsentrasi', 'Lihat status Tes Minat dan Tes Bakat.'],
-                ['2', 'Kerjakan sesuai jadwal', 'Setiap tes hanya bisa dikerjakan satu kali.'],
-                ['3', 'Selesaikan keduanya', 'Hasil rekomendasi muncul setelah kedua tes selesai.'],
-            ] as [$no, $judul, $desc])
-            <div class="flex items-start gap-3">
-                <div class="flex items-center justify-center w-6 h-6 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400 text-xs font-bold shrink-0 mt-0.5">{{ $no }}</div>
-                <div>
-                    <p class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $judul }}</p>
-                    <p class="text-xs text-gray-400 mt-0.5">{{ $desc }}</p>
-                </div>
-            </div>
-            @endforeach
-        </div>
-    </div>
-    @endif
 
 </div>
 @endsection

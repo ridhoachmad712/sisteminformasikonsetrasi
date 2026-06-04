@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\MahasiswaController;
 use App\Http\Controllers\Admin\SoalController;
 use App\Http\Controllers\Admin\HasilController;
 use App\Http\Controllers\Admin\JadwalController;
+use App\Http\Controllers\Admin\DosenPaController;
 
 Route::get('/', fn() => redirect()->route('login.mahasiswa'));
 
@@ -95,6 +96,9 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // Kelola User Admin
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except('show');
+
+    // Dosen PA
+    Route::resource('dosen-pa', DosenPaController::class)->except('show');
 
     // Rekap Konsentrasi
     Route::get('rekap', [\App\Http\Controllers\Admin\RekapController::class, 'index'])->name('rekap.index');

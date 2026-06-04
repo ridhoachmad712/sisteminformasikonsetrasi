@@ -9,7 +9,7 @@ class Mahasiswa extends Model
     protected $table = 'mahasiswa';
 
     protected $fillable = [
-        'nim', 'nama', 'angkatan', 'email', 'password',
+        'nim', 'nama', 'angkatan', 'dosen_pa_id', 'email', 'password',
         'sudah_tes', 'sudah_tes_minat', 'sudah_tes_bakat',
         'session_token',
         'jawaban_draft', 'urutan_soal',   // legacy, tetap untuk kompatibilitas
@@ -99,5 +99,10 @@ class Mahasiswa extends Model
     public function hasilTesTerakhir()
     {
         return $this->hasOne(HasilTes::class)->latestOfMany();
+    }
+
+    public function dosenPa()
+    {
+        return $this->belongsTo(DosenPa::class, 'dosen_pa_id');
     }
 }
