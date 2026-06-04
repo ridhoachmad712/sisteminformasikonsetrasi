@@ -95,4 +95,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     // Kelola User Admin
     Route::resource('users', \App\Http\Controllers\Admin\UserController::class)->except('show');
+
+    // Rekap Konsentrasi
+    Route::get('rekap', [\App\Http\Controllers\Admin\RekapController::class, 'index'])->name('rekap.index');
+    Route::get('rekap/{mahasiswum}', [\App\Http\Controllers\Admin\RekapController::class, 'show'])->name('rekap.show');
 });
