@@ -30,11 +30,10 @@
                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">
                     Jenis Tes <span class="text-error-500">*</span>
                 </label>
-                <div class="grid grid-cols-3 gap-3">
+                <div class="grid grid-cols-2 gap-3">
                     @foreach([
                         ['minat', 'Tes Minat', 'Khusus untuk soal minat saja', '#465fff'],
                         ['bakat', 'Tes Bakat', 'Khusus untuk soal bakat saja', '#12b76a'],
-                        ['',      'Minat & Bakat', 'Berlaku untuk kedua tes', '#6b7280'],
                     ] as [$val, $lbl, $desc, $clr])
                     <label class="cursor-pointer" x-data>
                         <input type="radio" name="jenis_tes" value="{{ $val }}" class="sr-only peer"

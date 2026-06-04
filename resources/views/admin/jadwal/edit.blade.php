@@ -36,11 +36,10 @@
 
             <div>
                 <label class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-400">Jenis Tes</label>
-                <div class="grid grid-cols-3 gap-3">
+                <div class="grid grid-cols-2 gap-3">
                     @foreach([
-                        ['minat', 'Tes Minat',    '#465fff'],
-                        ['bakat', 'Tes Bakat',    '#12b76a'],
-                        ['',      'Minat & Bakat', '#6b7280'],
+                        ['minat', 'Tes Minat', '#465fff'],
+                        ['bakat', 'Tes Bakat', '#12b76a'],
                     ] as [$val, $lbl, $clr])
                     <label class="cursor-pointer">
                         <input type="radio" name="jenis_tes" value="{{ $val }}" class="sr-only peer"

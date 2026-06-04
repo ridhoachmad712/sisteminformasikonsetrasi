@@ -24,7 +24,7 @@ class JadwalController extends Controller
     {
         $request->validate([
             'nama'          => 'required|string|max:100',
-            'jenis_tes'     => 'nullable|in:minat,bakat',
+            'jenis_tes'     => 'required|in:minat,bakat',
             'angkatan'      => 'nullable|digits:4',
             'tanggal_mulai' => 'required|date',
             'durasi'        => 'required|integer|min:5|max:1440',
@@ -39,7 +39,7 @@ class JadwalController extends Controller
 
         \App\Models\JadwalTes::create([
             'nama'            => $request->nama,
-            'jenis_tes'       => $request->jenis_tes ?: null,
+            'jenis_tes'       => $request->jenis_tes,
             'angkatan'        => $request->angkatan ?: null,
             'tanggal_mulai'   => $mulai,
             'tanggal_selesai' => $selesai,
@@ -60,7 +60,7 @@ class JadwalController extends Controller
     {
         $request->validate([
             'nama'          => 'required|string|max:100',
-            'jenis_tes'     => 'nullable|in:minat,bakat',
+            'jenis_tes'     => 'required|in:minat,bakat',
             'angkatan'      => 'nullable|digits:4',
             'tanggal_mulai' => 'required|date',
             'durasi'        => 'required|integer|min:5|max:1440',
@@ -75,7 +75,7 @@ class JadwalController extends Controller
 
         $jadwal->update([
             'nama'            => $request->nama,
-            'jenis_tes'       => $request->jenis_tes ?: null,
+            'jenis_tes'       => $request->jenis_tes,
             'angkatan'        => $request->angkatan ?: null,
             'tanggal_mulai'   => $mulai,
             'tanggal_selesai' => $selesai,
