@@ -34,9 +34,15 @@ class HasilController extends Controller
         if ($request->angkatan) $query->whereHas('mahasiswa', fn($q) => $q->where('angkatan', $request->angkatan));
         $hasil = $query->latest()->get();
 
-        $csv = "NIM,Nama,Angkatan,Rekomendasi,Nilai Pemasaran,Nilai Keuangan,Nilai SDM,Tanggal Tes\n";
+        $csv = "NIM,Nama,Angkatan,IPK,Pilihan 1,Pilihan 2,Pilihan 3,Rekomendasi,Nilai Pemasaran,Nilai Keuangan,Nilai SDM,Tanggal Tes\n";
         foreach ($hasil as $h) {
-            $csv .= "\"{$h->mahasiswa->nim}\",\"{$h->mahasiswa->nama}\",\"{$h->mahasiswa->angkatan}\",\"{$h->label_rekomendasi}\",{$h->nilai_pemasaran},{$h->nilai_keuangan},{$h->nilai_sdm},\"{$h->created_at->format('d/m/Y H:i')}\"\n";
+            $m       = $h->mahasiswa;
+            $ipk     = $m->ipk !== null ? number_format($m->ipk, 2) : '';
+            $pilihan = $m->pilihan_konsentrasi ?? [];
+            $p1      = \App\Models\Mahasiswa::labelKonsentrasi($pilihan[0] ?? '');
+            $p2      = \App\Models\Mahasiswa::labelKonsentrasi($pilihan[1] ?? '');
+            $p3      = \App\Models\Mahasiswa::labelKonsentrasi($pilihan[2] ?? '');
+            $csv .= "\"{$m->nim}\",\"{$m->nama}\",\"{$m->angkatan}\",\"{$ipk}\",\"{$p1}\",\"{$p2}\",\"{$p3}\",\"{$h->label_rekomendasi}\",{$h->nilai_pemasaran},{$h->nilai_keuangan},{$h->nilai_sdm},\"{$h->created_at->format('d/m/Y H:i')}\"\n";
         }
 
         return response($csv, 200, [

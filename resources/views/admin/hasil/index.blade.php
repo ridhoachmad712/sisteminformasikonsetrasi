@@ -52,6 +52,8 @@
                     <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 hidden lg:table-cell">Pemasaran</th>
                     <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 hidden lg:table-cell">Keuangan</th>
                     <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 hidden lg:table-cell">SDM</th>
+                    <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 hidden xl:table-cell">IPK</th>
+                    <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 hidden xl:table-cell">Pilihan 1-2-3</th>
                     <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 hidden md:table-cell">Tes Selesai</th>
                     <th class="px-4 py-3 text-right text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 hidden md:table-cell">Tanggal</th>
                     <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Detail</th>
@@ -81,6 +83,31 @@
                     <td class="px-4 py-4 text-center text-xs font-medium hidden lg:table-cell" style="color:#465fff">{{ number_format($h->nilai_pemasaran, 1) }}</td>
                     <td class="px-4 py-4 text-center text-xs font-medium hidden lg:table-cell" style="color:#12b76a">{{ number_format($h->nilai_keuangan, 1) }}</td>
                     <td class="px-4 py-4 text-center text-xs font-medium hidden lg:table-cell" style="color:#f79009">{{ number_format($h->nilai_sdm, 1) }}</td>
+                    {{-- IPK --}}
+                    <td class="px-4 py-4 text-center hidden xl:table-cell">
+                        @if($h->mahasiswa->ipk !== null)
+                            <span class="text-xs font-bold text-brand-600 dark:text-brand-400">{{ number_format($h->mahasiswa->ipk, 2) }}</span>
+                        @else
+                            <span class="text-xs text-gray-300 dark:text-gray-600">—</span>
+                        @endif
+                    </td>
+
+                    {{-- Pilihan Konsentrasi --}}
+                    <td class="px-4 py-4 text-center hidden xl:table-cell">
+                        @if($h->mahasiswa->sudah_pilih_konsentrasi && $h->mahasiswa->pilihan_konsentrasi)
+                            <div class="flex flex-col items-center gap-0.5">
+                                @foreach($h->mahasiswa->pilihan_konsentrasi as $i => $k)
+                                <span class="text-xs text-gray-600 dark:text-gray-400 leading-tight">
+                                    <span class="font-bold" style="color:{{ ['pemasaran'=>'#465fff','keuangan'=>'#12b76a','sdm'=>'#f79009'][$k] ?? '#6b7280' }}">{{ $i+1 }}.</span>
+                                    {{ \App\Models\Mahasiswa::labelKonsentrasi($k) }}
+                                </span>
+                                @endforeach
+                            </div>
+                        @else
+                            <span class="text-xs text-gray-300 dark:text-gray-600">—</span>
+                        @endif
+                    </td>
+
                     <td class="px-4 py-4 text-center hidden md:table-cell">
                         <div class="flex items-center justify-center gap-1">
                             <span class="inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-xs font-medium {{ $h->sudah_minat ? 'bg-blue-50 dark:bg-blue-500/10 text-blue-600 dark:text-blue-400' : 'bg-gray-100 dark:bg-gray-800 text-gray-400' }}">
@@ -100,7 +127,7 @@
                     </td>
                 </tr>
                 @empty
-                <tr><td colspan="8" class="py-12 text-center text-sm text-gray-400">Belum ada hasil tes.</td></tr>
+                <tr><td colspan="11" class="py-12 text-center text-sm text-gray-400">Belum ada hasil tes.</td></tr>
                 @endforelse
             </tbody>
         </table>
