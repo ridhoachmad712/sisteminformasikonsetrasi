@@ -10,14 +10,26 @@ class MahasiswaController extends Controller
     public function index(Request $request)
     {
         $query = \App\Models\Mahasiswa::query();
+
         if ($request->search) {
-            $query->where('nama', 'like', "%{$request->search}%")
+            $query->where(function ($q) use ($request) {
+                $q->where('nama', 'like', "%{$request->search}%")
                   ->orWhere('nim', 'like', "%{$request->search}%");
+            });
         }
         if ($request->angkatan) {
             $query->where('angkatan', $request->angkatan);
         }
-        $mahasiswa = $query->orderBy('angkatan', 'desc')->orderBy('nama')->paginate(20);
+        if ($request->status_tes) {
+            match($request->status_tes) {
+                'belum'   => $query->where('sudah_tes', false)->where('sudah_tes_minat', false)->where('sudah_tes_bakat', false),
+                'sebagian'=> $query->where(fn($q) => $q->where('sudah_tes_minat', true)->orWhere('sudah_tes_bakat', true))->where('sudah_tes', false),
+                'selesai' => $query->where('sudah_tes', true),
+                default   => null,
+            };
+        }
+
+        $mahasiswa    = $query->orderBy('angkatan', 'desc')->orderBy('nama')->paginate(20)->withQueryString();
         $angkatanList = \App\Models\Mahasiswa::select('angkatan')->distinct()->orderBy('angkatan', 'desc')->pluck('angkatan');
         return view('admin.mahasiswa.index', compact('mahasiswa', 'angkatanList'));
     }

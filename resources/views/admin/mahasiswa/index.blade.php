@@ -53,8 +53,15 @@
                 <option value="{{ $a }}" @selected(request('angkatan') == $a)>{{ $a }}</option>
                 @endforeach
             </select>
+            <select name="status_tes"
+                class="h-10 rounded-lg border border-gray-300 dark:border-gray-700 bg-transparent px-3 text-sm text-gray-700 dark:text-gray-300 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-none dark:bg-gray-900">
+                <option value="">Semua Status Tes</option>
+                <option value="belum"    @selected(request('status_tes') === 'belum')>Belum Tes</option>
+                <option value="sebagian" @selected(request('status_tes') === 'sebagian')>Sebagian (1 Tes)</option>
+                <option value="selesai"  @selected(request('status_tes') === 'selesai')>Selesai (2 Tes)</option>
+            </select>
             <button type="submit" class="h-10 px-4 rounded-lg bg-brand-500 text-white text-sm font-medium hover:bg-brand-600 transition-colors">Cari</button>
-            @if(request('search') || request('angkatan'))
+            @if(request('search') || request('angkatan') || request('status_tes'))
             <a href="{{ route('admin.mahasiswa.index') }}" class="h-10 px-4 flex items-center rounded-lg border border-gray-300 dark:border-gray-700 text-sm text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">Reset</a>
             @endif
         </form>
