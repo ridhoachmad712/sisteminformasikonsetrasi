@@ -49,8 +49,8 @@
                     <th class="px-3 py-3 text-center">Tes Minat</th>
                     <th class="px-3 py-3 text-center">Tes Bakat</th>
                     <th class="px-3 py-3 text-center">Rekomendasi</th>
-                    <th class="px-3 py-3 text-center text-gray-300 dark:text-gray-600" title="Aspek 1 (dikembangkan)">A1</th>
-                    <th class="px-3 py-3 text-center text-gray-300 dark:text-gray-600" title="Aspek 2 (dikembangkan)">A2</th>
+                    <th class="px-3 py-3 text-center">Prestasi</th>
+                    <th class="px-3 py-3 text-center">Skor Final</th>
                     <th class="px-3 py-3 text-center">Detail</th>
                 </tr>
             </thead>
@@ -136,9 +136,31 @@
                         @endif
                     </td>
 
-                    {{-- Aspek 1 & 2 placeholder --}}
-                    <td class="px-3 py-4 text-center"><span class="text-xs text-gray-300 dark:text-gray-600">—</span></td>
-                    <td class="px-3 py-4 text-center"><span class="text-xs text-gray-300 dark:text-gray-600">—</span></td>
+                    {{-- Prestasi --}}
+                    <td class="px-3 py-4 text-center">
+                        @if($m->prestasi_relevan)
+                            <span class="inline-flex items-center rounded-full bg-success-100 dark:bg-success-500/20 px-2 py-0.5 text-xs font-medium text-success-600 dark:text-success-400">✓</span>
+                        @else
+                            <span class="text-xs text-gray-300 dark:text-gray-600">—</span>
+                        @endif
+                    </td>
+
+                    {{-- Skor Final --}}
+                    @php $sk = $m->hitungSkorFinal(); @endphp
+                    <td class="px-3 py-4 text-center">
+                        @if($sk)
+                            @php
+                                $rcFinal = ['pemasaran'=>'#465fff','keuangan'=>'#12b76a','sdm'=>'#f79009'][$sk['rekomendasi']];
+                                $topScore = $sk['total'][$sk['rekomendasi']];
+                            @endphp
+                            <div class="flex flex-col items-center gap-0.5">
+                                <span class="font-bold text-sm" style="color:{{ $rcFinal }}">{{ $topScore }}</span>
+                                <span class="text-[10px] uppercase tracking-wide font-medium" style="color:{{ $rcFinal }}">{{ $sk['rekomendasi'] }}</span>
+                            </div>
+                        @else
+                            <span class="text-xs text-gray-300 dark:text-gray-600">—</span>
+                        @endif
+                    </td>
 
                     {{-- Detail --}}
                     <td class="px-3 py-4 text-center">
@@ -161,11 +183,12 @@
     </div>
 </div>
 
-{{-- Info aspek 2 yang dikembangkan --}}
-<div class="mt-4 rounded-xl border border-warning-200 dark:border-warning-900 bg-warning-50 dark:bg-warning-900/20 px-4 py-3 flex items-start gap-2.5">
-    <svg class="w-4 h-4 text-warning-600 dark:text-warning-400 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none"><path d="M12 9v4M12 17h.01M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    <p class="text-xs text-warning-700 dark:text-warning-400">
-        Kolom <strong>A1</strong> dan <strong>A2</strong> adalah aspek tambahan yang masih dalam pengembangan.
+{{-- Info formula bobot --}}
+<div class="mt-4 rounded-xl border border-brand-200 dark:border-brand-900 bg-brand-50/30 dark:bg-brand-900/10 px-4 py-3 flex items-start gap-2.5">
+    <svg class="w-4 h-4 text-brand-500 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1 8a1 1 0 112 0v3a1 1 0 11-2 0v-3zm1 7a1 1 0 100-2 1 1 0 000 2z" fill="currentColor"/></svg>
+    <p class="text-xs text-brand-700 dark:text-brand-400">
+        <strong>Formula skor final:</strong> MINAT 40% · Nilai MK 25% · Tes Minat &amp; Bakat 15% · Prestasi 15% · IPK 5% · Total 100%.
+        Skor "Prestasi" diinput admin per mahasiswa di halaman detail.
     </p>
 </div>
 @endsection

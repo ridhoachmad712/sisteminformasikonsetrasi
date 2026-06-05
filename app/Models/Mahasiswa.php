@@ -17,6 +17,7 @@ class Mahasiswa extends Model
         'nilai_matkul', 'sudah_input_nilai', 'ipk',
         'pilihan_konsentrasi', 'sudah_pilih_konsentrasi',
         'last_activity_at', 'tes_aktif',
+        'prestasi_relevan', 'catatan_prestasi',
     ];
 
     protected $casts = [
@@ -35,7 +36,107 @@ class Mahasiswa extends Model
         'pilihan_konsentrasi'      => 'array',
         'sudah_pilih_konsentrasi'  => 'boolean',
         'last_activity_at'         => 'datetime',
+        'prestasi_relevan'         => 'array',
     ];
+
+    /**
+     * Hitung skor final penentuan konsentrasi.
+     * Formula bobot:
+     *   - MINAT (Pilihan)         : 40% — Pilihan 1=100, 2=75, 3=50
+     *   - Nilai MK Pendukung      : 25% — rata² nilai MK × 25%
+     *   - Tes Minat & Bakat       : 15% — hasil gabungan tes × 15%
+     *   - Prestasi Relevan        : 15% — skor 0-15 langsung (sudah pada skala bobot)
+     *   - IPK                     :  5% — IPK × 25 × 5%
+     *
+     * Return array dengan breakdown lengkap atau null jika data belum lengkap.
+     */
+    public function hitungSkorFinal(): ?array
+    {
+        $konsentrasi = ['pemasaran', 'keuangan', 'sdm'];
+        $hasil       = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
+        $breakdown   = [];
+
+        // ── 1. MINAT (Pilihan Konsentrasi) — 40% ────────────────
+        $skorPilihan = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
+        if ($this->sudah_pilih_konsentrasi && $this->pilihan_konsentrasi) {
+            $konversi = [0 => 100, 1 => 75, 2 => 50]; // index → skor
+            foreach ($this->pilihan_konsentrasi as $i => $k) {
+                if (isset($konversi[$i]) && in_array($k, $konsentrasi)) {
+                    $skorPilihan[$k] = $konversi[$i];
+                }
+            }
+        }
+        foreach ($konsentrasi as $k) {
+            $kontrib = round($skorPilihan[$k] * 0.40, 2);
+            $hasil[$k] += $kontrib;
+            $breakdown['minat'][$k] = ['mentah' => $skorPilihan[$k], 'kontribusi' => $kontrib];
+        }
+
+        // ── 2. Nilai MK Pendukung — 25% ─────────────────────────
+        $mkData = $this->nilaiMkPerKonsentrasi();
+        foreach ($konsentrasi as $k) {
+            $avg     = $mkData[$k]['avg'] ?? 0;
+            $kontrib = round($avg * 0.25, 2);
+            $hasil[$k] += $kontrib;
+            $breakdown['matkul'][$k] = ['mentah' => $avg, 'kontribusi' => $kontrib];
+        }
+
+        // ── 3. Tes Minat & Bakat — 15% ──────────────────────────
+        $hasilTes = $this->hasilTesTerakhir;
+        $skorTes  = ['pemasaran' => 0, 'keuangan' => 0, 'sdm' => 0];
+        if ($hasilTes && $hasilTes->lengkap) {
+            $skorTes['pemasaran'] = (float) $hasilTes->nilai_pemasaran;
+            $skorTes['keuangan']  = (float) $hasilTes->nilai_keuangan;
+            $skorTes['sdm']       = (float) $hasilTes->nilai_sdm;
+        }
+        foreach ($konsentrasi as $k) {
+            $kontrib = round($skorTes[$k] * 0.15, 2);
+            $hasil[$k] += $kontrib;
+            $breakdown['tes'][$k] = ['mentah' => round($skorTes[$k], 2), 'kontribusi' => $kontrib];
+        }
+
+        // ── 4. Prestasi Relevan — 15% (langsung skor 0-15) ──────
+        $prestasi = $this->prestasi_relevan ?? [];
+        foreach ($konsentrasi as $k) {
+            $skor    = (int) ($prestasi[$k] ?? 0);
+            $kontrib = $skor; // sudah dalam skala bobot
+            $hasil[$k] += $kontrib;
+            $breakdown['prestasi'][$k] = ['mentah' => $skor, 'kontribusi' => $kontrib];
+        }
+
+        // ── 5. IPK — 5% ─────────────────────────────────────────
+        $ipk        = (float) ($this->ipk ?? 0);
+        $ipkSetara  = $ipk * 25;             // skala 0-100
+        $ipkKontrib = round($ipkSetara * 0.05, 2);
+        foreach ($konsentrasi as $k) {
+            $hasil[$k] += $ipkKontrib;
+            $breakdown['ipk'][$k] = ['mentah' => $ipk, 'kontribusi' => $ipkKontrib];
+        }
+
+        // ── Total + Rekomendasi ─────────────────────────────────
+        foreach ($konsentrasi as $k) $hasil[$k] = round($hasil[$k], 2);
+        arsort($hasil);
+        $rekomendasi = array_key_first($hasil);
+
+        return [
+            'breakdown'   => $breakdown,
+            'total'       => $hasil,
+            'rekomendasi' => $rekomendasi,
+            'lengkap'     => $this->cekKelengkapanData(),
+        ];
+    }
+
+    /** Cek kelengkapan data untuk perhitungan skor final */
+    public function cekKelengkapanData(): array
+    {
+        return [
+            'pilihan'  => $this->sudah_pilih_konsentrasi,
+            'matkul'   => $this->sudah_input_nilai,
+            'ipk'      => $this->ipk !== null,
+            'tes'      => $this->sudah_tes_minat && $this->sudah_tes_bakat,
+            'prestasi' => !empty($this->prestasi_relevan),
+        ];
+    }
 
     /** Label konsentrasi */
     public static function labelKonsentrasi(string $key): string

@@ -114,4 +114,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Monitor Live Tes
     Route::get('monitor', [\App\Http\Controllers\Admin\MonitorController::class, 'index'])->name('monitor.index');
     Route::get('monitor/data', [\App\Http\Controllers\Admin\MonitorController::class, 'data'])->name('monitor.data');
+
+    // Prestasi Relevan (input admin)
+    Route::get('prestasi/{mahasiswum}', [\App\Http\Controllers\Admin\PrestasiController::class, 'edit'])->name('prestasi.edit');
+    Route::put('prestasi/{mahasiswum}', [\App\Http\Controllers\Admin\PrestasiController::class, 'update'])->name('prestasi.update');
 });
