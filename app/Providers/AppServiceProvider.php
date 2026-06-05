@@ -29,10 +29,11 @@ class AppServiceProvider extends ServiceProvider
                 ], 429));
         });
 
-        // Submit tes: max 1x per 5 menit per mahasiswa (anti double-submit)
+        // Submit tes: max 1x per 5 menit per mahasiswa per jenis (anti double-submit)
         RateLimiter::for('tes-submit', function ($request) {
-            $id = session('mahasiswa_id', $request->ip());
-            return Limit::perMinutes(5, 1)->by("submit_{$id}");
+            $id    = session('mahasiswa_id', $request->ip());
+            $jenis = $request->route()->getName(); // tes.minat.submit atau tes.bakat.submit
+            return Limit::perMinutes(5, 1)->by("submit_{$id}_{$jenis}");
         });
 
         // Login mahasiswa: max 10 percobaan per menit per IP (anti brute-force)
