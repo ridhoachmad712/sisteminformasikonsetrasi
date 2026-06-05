@@ -118,4 +118,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     // Prestasi Relevan (input admin)
     Route::get('prestasi/{mahasiswum}', [\App\Http\Controllers\Admin\PrestasiController::class, 'edit'])->name('prestasi.edit');
     Route::put('prestasi/{mahasiswum}', [\App\Http\Controllers\Admin\PrestasiController::class, 'update'])->name('prestasi.update');
+
+    // Pemeringkatan Konsentrasi
+    Route::get('peringkat', [\App\Http\Controllers\Admin\PemeringkatanController::class, 'index'])->name('peringkat.index');
 });

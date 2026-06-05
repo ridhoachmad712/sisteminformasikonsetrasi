@@ -33,6 +33,7 @@ class MenuHelper
                     ['icon' => 'dosen',        'name' => 'Dosen PA',           'path' => '/admin/dosen-pa'],
                     ['icon' => 'charts',       'name' => 'Hasil Tes',          'path' => '/admin/hasil'],
                     ['icon' => 'clipboard',    'name' => 'Rekap Konsentrasi',  'path' => '/admin/rekap'],
+                    ['icon' => 'trophy',       'name' => 'Pemeringkatan',      'path' => '/admin/peringkat'],
                 ],
             ],
 
@@ -74,6 +75,8 @@ class MenuHelper
             'dosen' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
 
             'backup' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+
+            'trophy' => '<svg class="size-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7 4h10v3a5 5 0 01-10 0V4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M17 5h2a2 2 0 012 2v1a3 3 0 01-3 3M7 5H5a2 2 0 00-2 2v1a3 3 0 003 3M12 12v4M9 20h6M10 16h4l1 4H9l1-4z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>',
         ];
 
         return $icons[$iconName] ?? '<svg class="size-6" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="4"/></svg>';
