@@ -9,7 +9,22 @@
             <h2 class="font-bold text-gray-900 dark:text-white">Daftar Mahasiswa</h2>
             <p class="text-xs text-gray-400 mt-0.5">Kelola data mahasiswa peserta tes</p>
         </div>
-        <div class="flex items-center gap-2">
+        <div class="flex items-center gap-2 flex-wrap">
+            {{-- Bulk Toggle --}}
+            <form action="{{ route('admin.mahasiswa.bulk-toggle-aktif') }}" method="POST" class="flex gap-1.5"
+                onsubmit="return confirm(this.querySelector('[name=action]').value === 'aktifkan' ? 'Aktifkan semua mahasiswa?' : 'Nonaktifkan semua mahasiswa? Mahasiswa tidak dapat login.')">
+                @csrf
+                <button type="submit" name="action" value="aktifkan"
+                    class="inline-flex items-center gap-1.5 rounded-xl border border-success-300 dark:border-success-800 bg-success-50 dark:bg-success-500/10 px-3 py-2 text-xs font-semibold text-success-600 dark:text-success-400 hover:bg-success-100 transition-colors">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><path d="M5 13l4 4L19 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    Aktifkan Semua
+                </button>
+                <button type="submit" name="action" value="nonaktifkan"
+                    class="inline-flex items-center gap-1.5 rounded-xl border border-gray-300 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-3 py-2 text-xs font-semibold text-gray-600 dark:text-gray-400 hover:bg-gray-100 transition-colors">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none"><path d="M18 6L6 18M6 6l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    Nonaktifkan Semua
+                </button>
+            </form>
             <a href="{{ route('admin.mahasiswa.import.form') }}"
                 class="inline-flex items-center gap-2 rounded-xl border border-brand-300 dark:border-brand-800 bg-brand-50 dark:bg-brand-500/10 px-4 py-2.5 text-sm font-semibold text-brand-600 dark:text-brand-400 hover:bg-brand-100 dark:hover:bg-brand-500/20 transition-colors">
                 <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -54,6 +69,7 @@
                     <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Angkatan</th>
                     <th class="px-4 py-3 text-left text-xs font-semibold uppercase text-gray-500 dark:text-gray-400 hidden md:table-cell">Email</th>
                     <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Status Tes</th>
+                    <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Akun</th>
                     <th class="px-4 py-3 text-center text-xs font-semibold uppercase text-gray-500 dark:text-gray-400">Aksi</th>
                 </tr>
             </thead>
@@ -84,6 +100,17 @@
                             Belum Tes
                         </span>
                         @endif
+                    </td>
+                    {{-- Toggle Aktif --}}
+                    <td class="px-4 py-4 text-center">
+                        <form action="{{ route('admin.mahasiswa.toggle-aktif', $m) }}" method="POST" class="inline">
+                            @csrf
+                            <button type="submit"
+                                title="{{ $m->aktif ? 'Nonaktifkan' : 'Aktifkan' }}"
+                                class="relative inline-flex items-center w-10 h-6 rounded-full transition-colors focus:outline-none {{ $m->aktif ? 'bg-success-500' : 'bg-gray-300 dark:bg-gray-600' }}">
+                                <span class="inline-block w-4 h-4 bg-white rounded-full shadow transform transition-transform {{ $m->aktif ? 'translate-x-5' : 'translate-x-1' }}"></span>
+                            </button>
+                        </form>
                     </td>
                     <td class="px-4 py-4">
                         <div class="flex items-center justify-center gap-1.5">

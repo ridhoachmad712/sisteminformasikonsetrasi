@@ -100,4 +100,24 @@ class MahasiswaController extends Controller
 
         return redirect()->back()->with('success', 'Status tes ' . $mahasiswum->nama . ' berhasil direset.');
     }
+
+    public function toggleAktif(\App\Models\Mahasiswa $mahasiswum)
+    {
+        $mahasiswum->update(['aktif' => !$mahasiswum->aktif]);
+        $status = $mahasiswum->aktif ? 'diaktifkan' : 'dinonaktifkan';
+        return redirect()->back()->with('success', $mahasiswum->nama . ' berhasil ' . $status . '.');
+    }
+
+    public function bulkToggleAktif(Request $request)
+    {
+        $action = $request->input('action'); // 'aktifkan' atau 'nonaktifkan'
+        $aktif  = $action === 'aktifkan';
+
+        \App\Models\Mahasiswa::query()->update(['aktif' => $aktif]);
+
+        $total  = \App\Models\Mahasiswa::count();
+        $label  = $aktif ? 'diaktifkan' : 'dinonaktifkan';
+
+        return redirect()->back()->with('success', "Semua {$total} mahasiswa berhasil {$label}.");
+    }
 }

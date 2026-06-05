@@ -20,13 +20,20 @@ class AuthController extends Controller
         $request->validate(['nim' => 'required|string']);
 
         $mahasiswa = \App\Models\Mahasiswa::where('nim', trim($request->nim))
-            ->select('id', 'nim', 'nama', 'angkatan')
+            ->select('id', 'nim', 'nama', 'angkatan', 'aktif')
             ->first();
 
         if (!$mahasiswa) {
             return response()->json([
                 'found' => false,
                 'message' => 'NIM tidak ditemukan. Pastikan NIM Anda benar.',
+            ]);
+        }
+
+        if (!$mahasiswa->aktif) {
+            return response()->json([
+                'found' => false,
+                'message' => 'Akun Anda tidak aktif. Hubungi Prodi Manajemen untuk informasi lebih lanjut.',
             ]);
         }
 
@@ -59,6 +66,10 @@ class AuthController extends Controller
 
         if (!$mahasiswa) {
             return back()->withErrors(['nim' => 'NIM tidak ditemukan.']);
+        }
+
+        if (!$mahasiswa->aktif) {
+            return back()->withErrors(['nim' => 'Akun tidak aktif. Hubungi Prodi Manajemen.']);
         }
 
         // Hapus session sementara konfirmasi

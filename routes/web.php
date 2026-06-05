@@ -75,6 +75,8 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
 
     Route::resource('mahasiswa', MahasiswaController::class)->parameters(['mahasiswa' => 'mahasiswum']);
     Route::post('mahasiswa/{mahasiswum}/reset-tes', [MahasiswaController::class, 'resetTes'])->name('mahasiswa.reset-tes');
+    Route::post('mahasiswa/{mahasiswum}/toggle-aktif', [MahasiswaController::class, 'toggleAktif'])->name('mahasiswa.toggle-aktif');
+    Route::post('mahasiswa/bulk-toggle-aktif', [MahasiswaController::class, 'bulkToggleAktif'])->name('mahasiswa.bulk-toggle-aktif');
     Route::get('mahasiswa-import', [\App\Http\Controllers\Admin\ImportController::class, 'showForm'])->name('mahasiswa.import.form');
     Route::post('mahasiswa-import', [\App\Http\Controllers\Admin\ImportController::class, 'import'])->name('mahasiswa.import');
     Route::get('mahasiswa-import/template', [\App\Http\Controllers\Admin\ImportController::class, 'downloadTemplate'])->name('mahasiswa.import.template');

@@ -9,7 +9,7 @@ class Mahasiswa extends Model
     protected $table = 'mahasiswa';
 
     protected $fillable = [
-        'nim', 'nama', 'angkatan', 'dosen_pa_id', 'email', 'password',
+        'nim', 'nama', 'angkatan', 'aktif', 'dosen_pa_id', 'email', 'password',
         'sudah_tes', 'sudah_tes_minat', 'sudah_tes_bakat',
         'session_token',
         'jawaban_draft', 'urutan_soal',   // legacy, tetap untuk kompatibilitas
@@ -20,6 +20,7 @@ class Mahasiswa extends Model
     ];
 
     protected $casts = [
+        'aktif'             => 'boolean',
         'sudah_tes'         => 'boolean',
         'sudah_tes_minat'   => 'boolean',
         'sudah_tes_bakat'   => 'boolean',
