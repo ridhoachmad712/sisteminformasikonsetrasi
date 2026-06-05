@@ -85,7 +85,7 @@ class AuthController extends Controller
             'mahasiswa_token' => $token,
         ]);
 
-        return redirect()->route('beranda');
+        return redirect()->route('pengumuman');
     }
 
     public function showLoginAdmin()

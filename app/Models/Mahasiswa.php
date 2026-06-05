@@ -18,6 +18,7 @@ class Mahasiswa extends Model
         'pilihan_konsentrasi', 'sudah_pilih_konsentrasi',
         'last_activity_at', 'tes_aktif',
         'prestasi_relevan', 'catatan_prestasi',
+        'hasil_final', 'skor_final',
     ];
 
     protected $casts = [

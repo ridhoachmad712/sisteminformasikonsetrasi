@@ -27,6 +27,10 @@ Route::post('/logout', [AuthController::class, 'logoutMahasiswa'])->name('logout
 
 // Tes Mahasiswa (session guard)
 Route::middleware('auth.mahasiswa')->group(function () {
+    // Pengumuman (halaman utama mahasiswa)
+    Route::get('/pengumuman', [App\Http\Controllers\PengumumanController::class, 'index'])->name('pengumuman');
+    Route::get('/pengumuman/hasil', [App\Http\Controllers\PengumumanController::class, 'hasil'])->name('pengumuman.hasil');
+
     // Beranda
     Route::get('/beranda', [App\Http\Controllers\BerandaController::class, 'index'])->name('beranda');
 
