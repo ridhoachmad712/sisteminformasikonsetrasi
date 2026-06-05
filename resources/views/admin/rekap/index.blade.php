@@ -4,11 +4,16 @@
 
 @section('content')
 <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden">
-    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
+    <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800 flex items-center justify-between gap-3">
         <div>
             <h2 class="font-bold text-gray-900 dark:text-white">Rekap Data Mahasiswa</h2>
             <p class="text-xs text-gray-400 mt-0.5">Gabungan seluruh data pendukung penentuan konsentrasi</p>
         </div>
+        <a href="{{ route('admin.prestasi.import.form') }}"
+            class="inline-flex items-center gap-2 rounded-xl border border-brand-300 dark:border-brand-800 bg-brand-50 dark:bg-brand-500/10 px-4 py-2.5 text-sm font-semibold text-brand-600 dark:text-brand-400 hover:bg-brand-100 dark:hover:bg-brand-500/20 transition-colors">
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Import Prestasi
+        </a>
     </div>
 
     {{-- Filter --}}
