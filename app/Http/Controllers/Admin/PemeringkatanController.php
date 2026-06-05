@@ -8,7 +8,8 @@ use Illuminate\Http\Request;
 
 class PemeringkatanController extends Controller
 {
-    public function index(Request $request)
+    /** Ambil & olah data peringkat sesuai filter — dipakai index() dan export() */
+    private function getRanking(Request $request)
     {
         $query = Mahasiswa::with('hasilTesTerakhir');
 
@@ -21,45 +22,43 @@ class PemeringkatanController extends Controller
             $query->where('angkatan', $request->angkatan);
         }
 
-        // Ambil semua data dulu (perlu hitung skor di PHP karena tidak ada di DB)
         $rows = $query->orderBy('angkatan', 'desc')->orderBy('nama')->get()
             ->map(function ($m) {
                 $skor = $m->hitungSkorFinal();
                 if (!$skor) return null;
-
-                $total = $skor['total']; // sudah arsort, urutan 1-2-3
+                $total = $skor['total'];
                 $keys  = array_keys($total);
-
                 return [
-                    'mahasiswa' => $m,
-                    'rank1'     => ['k' => $keys[0], 'v' => $total[$keys[0]]],
-                    'rank2'     => ['k' => $keys[1], 'v' => $total[$keys[1]]],
-                    'rank3'     => ['k' => $keys[2], 'v' => $total[$keys[2]]],
+                    'mahasiswa'   => $m,
+                    'rank1'       => ['k' => $keys[0], 'v' => $total[$keys[0]]],
+                    'rank2'       => ['k' => $keys[1], 'v' => $total[$keys[1]]],
+                    'rank3'       => ['k' => $keys[2], 'v' => $total[$keys[2]]],
                     'rekomendasi' => $skor['rekomendasi'],
-                    'lengkap'   => $skor['lengkap'],
+                    'breakdown'   => $skor['breakdown'],
+                    'lengkap'     => $skor['lengkap'],
                 ];
             })
             ->filter();
 
-        // Filter berdasarkan konsentrasi rekomendasi
         if ($request->konsentrasi) {
             $rows = $rows->where('rekomendasi', $request->konsentrasi);
         }
-
-        // Sort by skor tertinggi (peringkat 1 dari skor terbesar)
         if ($request->sort === 'skor') {
             $rows = $rows->sortByDesc(fn($r) => $r['rank1']['v']);
         }
 
-        // Manual pagination
+        return $rows;
+    }
+
+    public function index(Request $request)
+    {
+        $rows = $this->getRanking($request);
+
         $perPage = 25;
         $page    = $request->input('page', 1);
         $paged   = $rows->forPage($page, $perPage);
         $paginator = new \Illuminate\Pagination\LengthAwarePaginator(
-            $paged,
-            $rows->count(),
-            $perPage,
-            $page,
+            $paged, $rows->count(), $perPage, $page,
             ['path' => $request->url(), 'query' => $request->query()]
         );
 
@@ -77,4 +76,71 @@ class PemeringkatanController extends Controller
             'stat'         => $stat,
         ]);
     }
+
+    public function export(Request $request)
+    {
+        $rows = $this->getRanking($request);
+        $label = ['pemasaran' => 'Pemasaran', 'keuangan' => 'Keuangan', 'sdm' => 'SDM'];
+
+        $filename = 'pemeringkatan-konsentrasi-' . now()->format('Y-m-d-His') . '.csv';
+
+        $callback = function () use ($rows, $label) {
+            $out = fopen('php://output', 'w');
+            // BOM untuk Excel agar UTF-8 aman
+            fprintf($out, chr(0xEF).chr(0xBB).chr(0xBF));
+
+            // Header
+            fputcsv($out, [
+                'No', 'NIM', 'Nama', 'Angkatan',
+                'Hasil Konsentrasi',
+                'Peringkat 1', 'Skor 1',
+                'Peringkat 2', 'Skor 2',
+                'Peringkat 3', 'Skor 3',
+                'MINAT Pemasaran', 'MINAT Keuangan', 'MINAT SDM',
+                'MK Pemasaran', 'MK Keuangan', 'MK SDM',
+                'Tes Pemasaran', 'Tes Keuangan', 'Tes SDM',
+                'Prestasi Pemasaran', 'Prestasi Keuangan', 'Prestasi SDM',
+                'IPK',
+            ]);
+
+            $no = 0;
+            foreach ($rows as $r) {
+                $no++;
+                $m = $r['mahasiswa'];
+                $b = $r['breakdown'];
+                fputcsv($out, [
+                    $no,
+                    $m->nim,
+                    $m->nama,
+                    $m->angkatan,
+                    $label[$r['rekomendasi']],
+                    $label[$r['rank1']['k']], $r['rank1']['v'],
+                    $label[$r['rank2']['k']], $r['rank2']['v'],
+                    $label[$r['rank3']['k']], $r['rank3']['v'],
+                    $b['minat']['pemasaran']['kontribusi'] ?? 0,
+                    $b['minat']['keuangan']['kontribusi']  ?? 0,
+                    $b['minat']['sdm']['kontribusi']       ?? 0,
+                    $b['matkul']['pemasaran']['kontribusi'] ?? 0,
+                    $b['matkul']['keuangan']['kontribusi']  ?? 0,
+                    $b['matkul']['sdm']['kontribusi']       ?? 0,
+                    $b['tes']['pemasaran']['kontribusi'] ?? 0,
+                    $b['tes']['keuangan']['kontribusi']  ?? 0,
+                    $b['tes']['sdm']['kontribusi']       ?? 0,
+                    $b['prestasi']['pemasaran']['kontribusi'] ?? 0,
+                    $b['prestasi']['keuangan']['kontribusi']  ?? 0,
+                    $b['prestasi']['sdm']['kontribusi']       ?? 0,
+                    $m->ipk ?? '',
+                ]);
+            }
+
+            fclose($out);
+        };
+
+        return response()->stream($callback, 200, [
+            'Content-Type'        => 'text/csv; charset=UTF-8',
+            'Content-Disposition' => "attachment; filename=\"{$filename}\"",
+            'Cache-Control'       => 'no-store, no-cache',
+        ]);
+    }
+
 }

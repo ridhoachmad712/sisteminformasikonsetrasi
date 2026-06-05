@@ -123,5 +123,6 @@ Route::prefix('admin')->name('admin.')->middleware('auth')->group(function () {
     Route::put('prestasi/{mahasiswum}',   [\App\Http\Controllers\Admin\PrestasiController::class, 'update'])->name('prestasi.update');
 
     // Pemeringkatan Konsentrasi
-    Route::get('peringkat', [\App\Http\Controllers\Admin\PemeringkatanController::class, 'index'])->name('peringkat.index');
+    Route::get('peringkat',        [\App\Http\Controllers\Admin\PemeringkatanController::class, 'index'])->name('peringkat.index');
+    Route::get('peringkat/export', [\App\Http\Controllers\Admin\PemeringkatanController::class, 'export'])->name('peringkat.export');
 });

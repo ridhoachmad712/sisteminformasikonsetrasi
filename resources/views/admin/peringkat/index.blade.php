@@ -28,11 +28,16 @@ $label = ['pemasaran' => 'Pemasaran', 'keuangan' => 'Keuangan', 'sdm' => 'SDM'];
 
 <div class="rounded-2xl border border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 overflow-hidden">
     <div class="px-6 py-4 border-b border-gray-100 dark:border-gray-800">
-        <div class="flex items-center justify-between gap-3 mb-3">
+        <div class="flex items-center justify-between gap-3 mb-3 flex-wrap">
             <div>
                 <h2 class="font-bold text-gray-900 dark:text-white">Peringkat Konsentrasi Mahasiswa</h2>
                 <p class="text-xs text-gray-400 mt-0.5">Urutan 1-2-3 skor akhir per mahasiswa</p>
             </div>
+            <a href="{{ route('admin.peringkat.export', request()->query()) }}"
+                class="inline-flex items-center gap-2 rounded-xl border border-success-300 dark:border-success-800 bg-success-50 dark:bg-success-500/10 px-4 py-2.5 text-sm font-semibold text-success-600 dark:text-success-400 hover:bg-success-100 dark:hover:bg-success-500/20 transition-colors">
+                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                Export CSV
+            </a>
         </div>
         {{-- Filter --}}
         <form method="GET" class="flex flex-wrap items-center gap-2">
